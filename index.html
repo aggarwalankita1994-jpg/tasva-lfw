@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#8a7642">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tasva LFW">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238a7642'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-size='30' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+<title>Tasva LFW Show Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}
+:root{padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+/* Layout: sticky brand bar + tab rail, one working surface per tab; drawer slides in from the right for record detail. Palette lifted from the Tasva invite: bronze-gold on paper white. */
+:root{
+  --bg:#f3f3ee; --surface:#ffffff; --surface-2:#f8f7f2; --ink:#24221b; --muted:#6c6757; --line:#e1ded2; --line-strong:#cdc8b6;
+  --gold:#8a7642; --gold-ink:#6b5a2c; --gold-soft:#efe9d6; --on-gold:#ffffff;
+  --ok:#2c7149; --ok-soft:#e3f1e8; --warn:#9a600d; --warn-soft:#fbefd9; --bad:#ab3434; --bad-soft:#f8e3e1;
+  --info:#355b8c; --info-soft:#e3ebf6; --violet:#68479c; --violet-soft:#ece5f6; --teal:#22706e; --teal-soft:#dff0ee;
+  --rose:#a23d6b; --rose-soft:#f6e2eb; --slate:#5d6470; --slate-soft:#e9eaec;
+  --shadow:0 12px 40px rgba(40,34,18,.14);
+  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-body:"Jost","Futura","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --r:10px; --r-sm:6px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14130f; --surface:#1d1b16; --surface-2:#22201a; --ink:#ebe7da; --muted:#a39d8a; --line:#322f27; --line-strong:#47433a;
+  --gold:#c8b27a; --gold-ink:#dcc894; --gold-soft:#2d2918; --on-gold:#1a1810;
+  --ok:#6cc292; --ok-soft:#1b2e22; --warn:#e2a64c; --warn-soft:#33270f; --bad:#ec8a84; --bad-soft:#3a1d1b;
+  --info:#8fb4e6; --info-soft:#1b2638; --violet:#bba2ea; --violet-soft:#2a2238; --teal:#7ed0cc; --teal-soft:#16302f;
+  --rose:#eb93bb; --rose-soft:#36202b; --slate:#aab1bc; --slate-soft:#272a2f;
+  --shadow:0 12px 40px rgba(0,0,0,.5); color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#14130f; --surface:#1d1b16; --surface-2:#22201a; --ink:#ebe7da; --muted:#a39d8a; --line:#322f27; --line-strong:#47433a;
+  --gold:#c8b27a; --gold-ink:#dcc894; --gold-soft:#2d2918; --on-gold:#1a1810;
+  --ok:#6cc292; --ok-soft:#1b2e22; --warn:#e2a64c; --warn-soft:#33270f; --bad:#ec8a84; --bad-soft:#3a1d1b;
+  --info:#8fb4e6; --info-soft:#1b2638; --violet:#bba2ea; --violet-soft:#2a2238; --teal:#7ed0cc; --teal-soft:#16302f;
+  --rose:#eb93bb; --rose-soft:#36202b; --slate:#aab1bc; --slate-soft:#272a2f;
+  --shadow:0 12px 40px rgba(0,0,0,.5); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:15px;line-height:1.45;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--gold-ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.num,td.n,.tab-nums{font-variant-numeric:tabular-nums}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1320px;margin:0 auto;padding-inline:16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;padding-block:12px 0}
+.brand{display:flex;align-items:baseline;gap:10px;min-width:0}
+.brand b{font-family:var(--f-display);font-weight:600;letter-spacing:.18em;font-size:20px;color:var(--gold-ink)}
+.brand span{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.countdown{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.countdown strong{font-family:var(--f-display);font-size:20px;color:var(--ink);font-weight:600}
+.me{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.me img{width:24px;height:24px;border-radius:50%}
+.tabs{flex-basis:100%;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-top:4px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 12px;cursor:pointer;color:var(--muted);white-space:nowrap;font-weight:500;display:flex;align-items:center;gap:6px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--gold)}
+.tabs button:hover{color:var(--ink)}
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:var(--gold);color:var(--on-gold);font-size:12px;font-weight:600}
+
+main{max-width:1320px;margin:0 auto;padding-inline:16px;padding-block:20px 80px}
+.banner{padding:12px 14px;border-radius:var(--r);background:var(--warn-soft);color:var(--warn);margin-bottom:16px}
+h1,h2,h3{text-wrap:balance;margin:0}
+h2.sec{font-family:var(--f-display);font-weight:600;font-size:26px;margin-bottom:4px}
+.sub{color:var(--muted);margin:0 0 16px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* Panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.grid{display:grid;gap:16px}
+.g-tiles{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.grid > *,.stack > *{min-width:0}
+.tile{padding:14px 16px}
+.tile .v{font-family:var(--f-display);font-size:34px;font-weight:600;line-height:1.1;margin-top:6px}
+.tile .v small{font-family:var(--f-body);font-size:14px;color:var(--muted);font-weight:400}
+.tile .s{color:var(--muted);font-size:13px;margin-top:4px}
+.meter{height:8px;border-radius:4px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;display:flex;margin-top:10px}
+.meter i{display:block;height:100%}
+
+/* Buttons & inputs */
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);padding:7px 12px;border-radius:var(--r-sm);cursor:pointer;font-weight:500;font-size:14px;white-space:nowrap}
+.btn:hover{border-color:var(--gold)}
+.btn.primary{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.btn.ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.btn.ghost{border-color:transparent;background:none}
+.btn.danger{color:var(--bad);border-color:var(--bad-soft)}
+.btn.sm{padding:4px 9px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],input[type=search],input[type=number],input[type=date],input[type=datetime-local],input[type=url],select,textarea{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:7px 10px;min-width:0;max-width:100%}
+textarea{width:100%;resize:vertical}
+label.f{display:grid;gap:4px;font-size:12px;color:var(--muted);letter-spacing:.02em}
+label.f input,label.f select,label.f textarea{font-size:14px;color:var(--ink)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar input[type=search]{flex:1 1 220px}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--r-sm);overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:5px 10px;cursor:pointer;font-size:13px;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--gold-soft);color:var(--gold-ink);font-weight:600}
+.seg.av button[aria-pressed="true"][data-v="yes"]{background:var(--ok-soft);color:var(--ok)}
+.seg.av button[aria-pressed="true"][data-v="no"]{background:var(--bad-soft);color:var(--bad)}
+.seg.av button[aria-pressed="true"][data-v="pending"]{background:var(--slate-soft);color:var(--slate)}
+
+/* Chips & pills */
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap;background:var(--slate-soft);color:var(--slate)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.nodot::before{display:none}
+.c-slate{background:var(--slate-soft);color:var(--slate)} .c-blue{background:var(--info-soft);color:var(--info)}
+.c-violet{background:var(--violet-soft);color:var(--violet)} .c-amber{background:var(--warn-soft);color:var(--warn)}
+.c-green{background:var(--ok-soft);color:var(--ok)} .c-rose{background:var(--rose-soft);color:var(--rose)}
+.c-teal{background:var(--teal-soft);color:var(--teal)} .c-red{background:var(--bad-soft);color:var(--bad)}
+.c-gold{background:var(--gold-soft);color:var(--gold-ink)}
+.flags{display:flex;flex-wrap:wrap;gap:4px}
+.flag{font-size:11px;padding:1px 7px;border-radius:4px;white-space:nowrap}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:13px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-ink);font-weight:500}
+.chip .x{margin-left:4px;opacity:.6}
+select.status{border-radius:999px;padding:3px 8px;font-size:12px;font-weight:500;border:1px solid transparent;cursor:pointer;max-width:200px}
+
+/* Table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--surface-2);position:sticky;top:0;white-space:nowrap}
+th.n,td.n{text-align:right}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:0}
+td .who{display:flex;align-items:center;gap:10px;min-width:180px}
+.namebtn{background:none;border:0;padding:0;cursor:pointer;font-weight:600;text-align:left;color:var(--ink)}
+.namebtn:hover{color:var(--gold-ink);text-decoration:underline}
+.handle{font-size:12px;color:var(--muted);text-decoration:none;display:block}
+.handle:hover{color:var(--gold-ink)}
+.mono{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--gold-soft);color:var(--gold-ink);font-family:var(--f-display);font-weight:600;font-size:14px;overflow:hidden}
+.mono img{width:100%;height:100%;object-fit:cover}
+.delta-up{color:var(--warn)} .delta-down{color:var(--ok)}
+.avdots{display:inline-flex;gap:3px}
+.avdots i{width:18px;height:18px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:600}
+.av-yes{background:var(--ok-soft);color:var(--ok)} .av-no{background:var(--bad-soft);color:var(--bad)} .av-pending{background:var(--slate-soft);color:var(--slate)}
+.footer-sum{position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-top:10px;box-shadow:0 -6px 20px rgba(0,0,0,.04)}
+.footer-sum b{font-family:var(--f-display);font-size:18px}
+.bulk{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:auto}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;text-align:left;padding:0}
+.card:hover{border-color:var(--gold)}
+.card .ph{aspect-ratio:4/5;max-width:100%;background:var(--gold-soft);display:grid;place-items:center;color:var(--gold-ink);font-family:var(--f-display);font-size:44px;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover}
+.card .bd{padding:10px 12px;display:grid;gap:6px}
+.card .nm{font-weight:600}
+.card .rw{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+
+/* Dashboard */
+.funnel{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;font-size:14px}
+.fbar{height:22px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.fbar i{display:block;height:100%;border-radius:4px}
+.actions-list{display:grid}
+.act{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;text-align:left;width:100%}
+.act:last-child{border-bottom:0}
+.act:hover{background:var(--surface-2)}
+.act .cnt{font-family:var(--f-display);font-size:22px;font-weight:600;min-width:44px;text-align:right}
+.act .lbl{flex:1;min-width:0}
+.act .lbl small{display:block;color:var(--muted);font-size:12px}
+.act .stripe{width:4px;align-self:stretch;border-radius:2px}
+.act.zero{opacity:.5}
+.matrix td,.matrix th{padding:7px 8px}
+.matrix td.n b{font-weight:600}
+.nodata{padding:30px 16px;text-align:center;color:var(--muted)}
+
+/* Approvals */
+.queues{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
+.queue h3{font-family:var(--f-display);font-size:22px;font-weight:600;display:flex;align-items:center;gap:10px}
+.qhead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:space-between;margin-bottom:10px}
+.acard{display:grid;grid-template-columns:auto auto 1fr;gap:10px 12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-bottom:8px}
+.acard .meta{font-size:13px;color:var(--muted)}
+.acard .btns{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.acard .btns input{flex:1 1 160px}
+
+/* Drawer */
+.scrim{position:fixed;inset:0;background:rgba(20,18,12,.35);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--bg);z-index:41;box-shadow:var(--shadow);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.dh{padding:16px;background:var(--surface);border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start}
+.dh .mono{width:64px;height:64px;font-size:24px;border-radius:12px}
+.dh h3{font-family:var(--f-display);font-size:24px;font-weight:600}
+.db{overflow-y:auto;padding:16px;display:grid;gap:14px;padding-bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+.dsec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px}
+.dsec h4{margin:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.avrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.avrow small{color:var(--muted);display:block}
+.trail{font-size:13px;color:var(--muted);display:grid;gap:3px}
+.trail b{color:var(--ink);font-weight:500}
+.log{font-size:13px;display:grid;gap:6px}
+.log div{display:flex;gap:8px}
+.log time{color:var(--muted);white-space:nowrap;min-width:92px}
+
+/* Agency desk / import / settings */
+.desk{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));align-items:start}
+.msg{font-family:var(--f-body);font-size:14px;line-height:1.5;min-height:360px;background:var(--surface-2)}
+.srclist{display:grid;gap:6px}
+.srcbtn{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;text-align:left}
+.srcbtn[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.srcbtn small{color:var(--muted)}
+.check{display:flex;gap:8px;align-items:center;font-size:14px}
+.st-row{display:grid;grid-template-columns:auto minmax(0,1fr) 150px 110px auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.st-row:last-child{border-bottom:0}
+.st-row .mv{display:flex;gap:2px}
+@media (max-width:640px){
+  .st-row{grid-template-columns:minmax(0,1fr) auto;}
+  .st-row > .sw{display:none}
+  .frow{grid-template-columns:110px 1fr 40px}
+  .countdown{margin-left:0}
+  .footer-sum .bulk{margin-left:0}
+}
+/* Modal, popover, dashboard details, change feed */
+.modal-scrim{position:fixed;inset:0;background:rgba(20,18,12,.45);z-index:70;display:grid;place-items:center;padding:16px}
+.modal{background:var(--bg);border-radius:var(--r);box-shadow:var(--shadow);width:min(640px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;overflow:hidden}
+.modal.sm{width:min(440px,100%)}
+.modal header{padding:16px 18px;background:var(--surface);border-bottom:1px solid var(--line)}
+.modal header h3{font-family:var(--f-display);font-size:22px;font-weight:600}
+.modal .mb{padding:16px 18px;overflow-y:auto;display:grid;gap:14px}
+.modal footer{padding:12px 18px;background:var(--surface);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;align-items:center}
+.modal footer .err{color:var(--bad);font-size:13px;margin-right:auto}
+.req::after{content:" *";color:var(--bad)}
+.pop{position:fixed;z-index:65;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r);box-shadow:var(--shadow);padding:8px;display:grid;gap:2px;min-width:230px}
+.pop label{display:flex;gap:10px;align-items:center;padding:7px 8px;border-radius:var(--r-sm);cursor:pointer;font-size:14px}
+.pop label:hover{background:var(--surface-2)}
+.pop small{color:var(--muted);display:block;font-size:12px}
+.avbtn{display:inline-flex;gap:3px;align-items:center;background:none;border:1px solid transparent;border-radius:6px;padding:2px 4px;cursor:pointer}
+.avbtn:hover{border-color:var(--line-strong)}
+.avbtn .car{color:var(--muted);font-size:10px;margin-left:2px}
+select.meas{border-radius:999px;padding:3px 8px;font-size:12px;font-weight:500;border:1px solid transparent;cursor:pointer}
+.act-wrap{border-bottom:1px solid var(--line)}
+.act-wrap:last-child{border-bottom:0}
+.act-wrap .act{border-bottom:0}
+.act .det{flex:none}
+.detail{padding:4px 0 12px 64px;display:grid;gap:4px}
+.detail .di{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;font-size:14px}
+.detail .di .muted{font-size:13px}
+.feed{display:grid;gap:0}
+.feed .fi{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.feed .fi:last-child{border-bottom:0}
+.feed .who-dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;color:#fff}
+.feed time{color:var(--muted);font-size:12px}
+.lastby{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:10px}
+.lastby .lb{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:14px}
+.lastby .lb b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:2px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r-sm);z-index:60;font-size:14px;max-width:calc(100% - 32px)}
+.diff{font-size:13px}
+.diff td{vertical-align:top}
+.muted{color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stack{display:grid;gap:12px}
+@media (prefers-reduced-motion:no-preference){.drawer{animation:slide .18s ease-out}@keyframes slide{from{transform:translateX(24px);opacity:.6}}}
+/* ---------- Roles ---------- */
+.rolechip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--slate-soft);color:var(--slate);font-weight:600;white-space:nowrap}
+.rolechip.r-ankita{background:var(--gold-soft);color:var(--gold-ink)}
+.rolechip.r-piyush{background:var(--violet-soft);color:var(--violet)}
+.waiting-note{font-size:13px;color:var(--muted)}
+.ro input:disabled,.ro select:disabled,.ro textarea:disabled{opacity:1;background:var(--surface-2);color:var(--ink);border-color:var(--line)}
+.setup{max-width:640px;margin:40px auto;display:grid;gap:12px}
+/* ---------- Phone layout ---------- */
+.mlist{display:grid;gap:8px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:grid}
+.mmain{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;background:none;border:0;text-align:left;width:100%;cursor:pointer;color:inherit;font:inherit}
+.mmain .mono{width:48px;height:48px;font-size:17px}
+.mtxt{display:grid;gap:4px;min-width:0}
+.mtxt b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mtxt small{color:var(--muted);font-size:12px}
+.mfee{display:grid;justify-items:end;gap:5px;font-weight:600}
+.mfee small{font-weight:400;color:var(--muted);font-size:11px}
+.mappr{margin:0 12px 12px;justify-content:center}
+.ftoggle{display:none}
+.tabs .ic{display:none}
+@media (max-width:640px){
+  input,select,textarea{font-size:16px!important}
+  .top-inner{padding-block:10px;gap:8px 12px}
+  .brand b{font-size:18px}
+  .brand span{display:none}
+  .countdown{margin-left:auto;font-size:12px}
+  .countdown strong{font-size:17px}
+  .countdown span{display:none}
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);margin:0;padding:2px 2px calc(2px + env(safe-area-inset-bottom,0px));flex-basis:auto;justify-content:space-around}
+  .tabs button{flex:1 1 0;min-width:48px;flex-direction:column;gap:2px;font-size:10.5px;padding:7px 2px 6px;border-bottom:0;border-top:2px solid transparent;position:relative}
+  .tabs button[aria-selected="true"]{border-top-color:var(--gold);color:var(--gold-ink)}
+  .tabs .ic{display:block;width:22px;height:22px}
+  .tabs .lbl{white-space:nowrap}
+  .tabs .badge{position:absolute;top:3px;left:calc(50% + 4px);min-width:16px;height:16px;font-size:10px;padding:0 4px}
+  main{padding-block:14px calc(92px + env(safe-area-inset-bottom,0px))}
+  .footer-sum{bottom:calc(62px + env(safe-area-inset-bottom,0px));padding:8px 12px;gap:4px 14px;font-size:13px}
+  .footer-sum b{font-size:16px}
+  h2.sec{font-size:23px}
+  .sub{font-size:14px}
+  .toolbar input[type=search]{flex:1 1 100%}
+  .toolbar .filters{display:none;flex-wrap:wrap;gap:8px;width:100%}
+  .toolbar .filters.open{display:flex}
+  .toolbar .filters select{flex:1 1 calc(50% - 4px);min-width:0}
+  .ftoggle{display:inline-flex}
+  .btn{min-height:40px}
+  .btn.sm{min-height:34px}
+  .tile .v{font-size:28px}
+  .g-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .tile{padding:12px}
+  .drawer{width:100%}
+  .dh{padding:12px 14px}
+  .dh .mono{width:52px;height:52px}
+  .db{padding:12px}
+  .modal-scrim{align-items:end;padding:0}
+  .modal,.modal.sm{width:100%!important;max-height:92vh;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .modal footer{justify-content:stretch}
+  .modal footer .btn{flex:1;justify-content:center}
+  .queues{grid-template-columns:1fr}
+  .acard{grid-template-columns:auto 1fr}
+  .acard > .acheck{display:none}
+  .acard .btns input{flex:1 1 100%}
+  .detail{padding-left:16px}
+  .act .cnt{min-width:34px;font-size:20px}
+  .lastby{grid-template-columns:1fr}
+  .seg button{padding:7px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><b>TASVA</b><span>× Lakmé Fashion Week 2026 · Show desk</span></div>
+    <div class="countdown" id="countdown"></div>
+    <div class="me" id="me"></div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+</header>
+<main id="main">
+  <div class="nodata" id="boot">Loading the show desk…</div>
+</main>
+<div id="drawer-root"></div>
+<div id="pop-root"></div>
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+
+<script>window.__fbReady=new Promise(r=>window.__fbResolve=r);</script>
+<script type="module">
+const V="10.12.2", base=`https://www.gstatic.com/firebasejs/${V}/`;
+try{
+  let cfg; try{ cfg=(await import("./firebase-config.js")).default; }catch(e){ cfg=null; }
+  if(!cfg||!cfg.apiKey||/PASTE/i.test(cfg.apiKey)||!cfg.projectId||/PASTE/i.test(cfg.projectId)) throw new Error("config");
+  const [app,fs,au]=await Promise.all([import(base+"firebase-app.js"),import(base+"firebase-firestore.js"),import(base+"firebase-auth.js")]);
+  const fa=app.initializeApp(cfg);
+  const db=fs.initializeFirestore(fa,{ignoreUndefinedProperties:true});
+  const wrapDoc=s=>({id:s.id,exists:s.exists(),data:()=>s.data(),metadata:s.metadata});
+  const wrapQ=s=>({docs:s.docs.map(wrapDoc),size:s.size,empty:s.empty});
+  const flatten=(o,p="",out={})=>{ for(const [k,v] of Object.entries(o)){ const key=p?p+"."+k:k;
+    if(v&&typeof v==="object"&&!Array.isArray(v)&&Object.keys(v).length) flatten(v,key,out); else out[key]=v; } return out; };
+  const err=e=>{ const code=(e&&e.code||"").replace("permission-denied","permission_denied"); return Object.assign(new Error(e&&e.message||"error"),{code}); };
+  const wrapP=p=>p.catch(e=>{ throw err(e); });
+  function docRef(path){ const r=fs.doc(db,path); return {
+    id:r.id, path,
+    get:async()=>wrapDoc(await fs.getDoc(r)),
+    set:d=>wrapP(fs.setDoc(r,d)), update:d=>wrapP(fs.updateDoc(r,flatten(d))), delete:()=>wrapP(fs.deleteDoc(r)),
+    onSnapshot:(n,e)=>fs.onSnapshot(r,s=>n(wrapDoc(s)),x=>e&&e(err(x))) }; }
+  function queryRef(path,cons=[]){ const c=fs.collection(db,path); return {
+    path,
+    where:(f,op,v)=>queryRef(path,[...cons,fs.where(f,op,v)]),
+    orderBy:(f,d)=>queryRef(path,[...cons,fs.orderBy(f,d||"asc")]),
+    limit:n=>queryRef(path,[...cons,fs.limit(n)]),
+    get:async()=>wrapQ(await fs.getDocs(fs.query(c,...cons))),
+    onSnapshot:(n,e)=>fs.onSnapshot(fs.query(c,...cons),s=>n(wrapQ(s)),x=>e&&e(err(x))),
+    doc:id=>docRef(path+"/"+(id||fs.doc(c).id)),
+    add:async d=>{ const r=await wrapP(fs.addDoc(c,d)); return docRef(path+"/"+r.id); } }; }
+  const adapter={ collection:p=>queryRef(p), doc:p=>docRef(p),
+    batchSet:async(items,onProgress)=>{ for(let i=0;i<items.length;i+=400){ const b=fs.writeBatch(db);
+      items.slice(i,i+400).forEach(([p,d])=>b.set(fs.doc(db,p),d)); await wrapP(b.commit()); onProgress&&onProgress(Math.min(items.length,i+400)); } } };
+  const auth=au.getAuth(fa);
+  try{ await au.getRedirectResult(auth); }catch(e){ console.warn(e); }
+  const authApi={
+    onChange:cb=>au.onAuthStateChanged(auth,u=>cb(u?{uid:u.uid,email:(u.email||"").toLowerCase(),name:u.displayName||"",photo:u.photoURL||"",verified:!!u.emailVerified}:null)),
+    signIn:async()=>{ const p=new au.GoogleAuthProvider(); p.setCustomParameters({prompt:"select_account"});
+      try{ await au.signInWithPopup(auth,p); }
+      catch(e){ if(/popup-blocked|operation-not-supported|popup-closed-by-browser/.test(e.code||"")) await au.signInWithRedirect(auth,p); else if(!/popup-closed-by-user|cancelled-popup-request/.test(e.code||"")) throw e; } },
+    signOut:()=>au.signOut(auth) };
+  window.__fbResolve({db:adapter,auth:authApi});
+}catch(e){ console.error(e); window.__fbResolve(e&&e.message==="config"?{setup:true}:{error:String(e&&e.message||e)}); }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+"use strict";
+/* ---------- Defaults ---------- */
+const SYS = ["new","pending_piyush","waiting_agency","confirmed","dropped"];
+const BUCKETS = [
+  {id:"review",  label:"Ankita to review", color:"blue"},
+  {id:"internal",label:"With Piyush",       color:"violet"},
+  {id:"agency",  label:"With agency",       color:"amber"},
+  {id:"confirmed",label:"Confirmed",        color:"green"},
+  {id:"out",     label:"Dropped",           color:"slate"}
+];
+const COLORS = ["slate","blue","violet","amber","green","teal","rose","red","gold"];
+const baseStatuses = () => ([
+  {id:"new",label:"New · Ankita to review",bucket:"review",color:"blue"},
+  {id:"pending_piyush",label:"Approval pending Piyush",bucket:"internal",color:"violet"},
+  {id:"waiting_agency",label:"Waiting on agency",bucket:"agency",color:"amber"},
+  {id:"counter",label:"Counter-offer pending",bucket:"agency",color:"rose"},
+  {id:"confirmed",label:"Confirmed",bucket:"confirmed",color:"green"},
+  {id:"dropped",label:"Dropped",bucket:"out",color:"slate"}
+]);
+const DEFAULT_CONFIG = {
+  statuses:{models:baseStatuses(), influencers:baseStatuses()},
+  markers:{
+    models:[{id:"look_test",label:"Look test done"},{id:"design_ok",label:"Selected by design"},{id:"outstation",label:"Needs flight / stay"},{id:"adv_req",label:"Advance required"},{id:"adv_paid",label:"Advance paid"}],
+    influencers:[{id:"selected",label:"Selected"},{id:"not_selected",label:"Not selected"},{id:"posting",label:"Posting committed"},{id:"adv_req",label:"Advance required"},{id:"adv_paid",label:"Advance paid"}]
+  },
+  sources:{models:["TSS","Udit Runway","Purple Thoughts","Amit","Lakme","Individual"], influencers:["Apostrophe","Debarathi"]},
+  dates:{ho:"", taj:"2026-10-11", show:"2026-10-15T21:30"},
+  targets:{models:80, reach:25000000},
+  hikePct:20
+};
+const KINDS = {
+  models:{coll:"models", one:"model", label:"Models"},
+  influencers:{coll:"influencers", one:"influencer", label:"Influencers"}
+};
+const MEAS = [["height","Height"],["chest","Chest"],["waist","Waist"],["hips","Hips"],["shoulder","Shoulder"],["sleeve","Sleeve"],["inseam","Inseam"],["shoe","Shoe"]];
+const ALTER = ["Not started","In progress","Done"];
+const TABS = [["dashboard","Dashboard"],["models","Models"],["influencers","Influencers"],["approvals","Approvals"],["desk","Agency desk"],["import","Excel sync"],["settings","Settings"]];
+
+/* ---------- State ---------- */
+const S = {
+  db:null, auth:null, authUser:null, role:"guest", roles:null, downloads:null, bootMsg:"",
+  models:[], influencers:[], config:clone(DEFAULT_CONFIG), configExists:false, activity:[], profiles:{},
+  loaded:{models:false, influencers:false, config:false},
+  tab:"dashboard",
+  f:{models:{q:"",source:"all",bucket:"all",status:"all",flag:"all",sort:"serial",view:"table"},
+     influencers:{q:"",source:"all",bucket:"all",status:"all",flag:"all",sort:"name",view:"table",type:"all"}},
+  sel:{models:new Set(), influencers:new Set(), approvals:new Set()},
+  drawer:null, confirmDelete:false,
+  desk:{source:null, sec:{book:true, avail:true, meas:true}},
+  imp:null, dirty:false, sync:{models:null,influencers:null}, syncIn:null, copy:null, restore:"", ready:false
+};
+
+/* ---------- Utils ---------- */
+function clone(o){return JSON.parse(JSON.stringify(o))}
+const $ = (s,r=document)=>r.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const nowISO = ()=>new Date().toISOString();
+const inr = n => n==null||n===""?"—":"₹"+Number(n).toLocaleString("en-IN");
+const inrShort = n => n>=1e7?"₹"+(n/1e7).toFixed(2)+" Cr":n>=1e5?"₹"+(n/1e5).toFixed(2)+" L":inr(n);
+const fmtF = n => !n?"0":n>=1e6?(n/1e6).toFixed(n>=1e8?0:1).replace(/\.0$/,"")+"M":n>=1e3?Math.round(n/1e3)+"K":String(n);
+function parseNum(s){
+  if(typeof s==="number") return isFinite(s)?Math.round(s):null;
+  s=String(s??"").trim().toLowerCase().replace(/[,₹\s]/g,"").replace(/^rs\.?/,"");
+  const m=s.match(/^(\d+(?:\.\d+)?)(k|l|lac|lakh|m|mn|cr)?$/); if(!m) return null;
+  let n=parseFloat(m[1]); const u=m[2];
+  if(u==="k") n*=1e3; else if(u==="l"||u==="lac"||u==="lakh") n*=1e5; else if(u==="m"||u==="mn") n*=1e6; else if(u==="cr") n*=1e7;
+  return Math.round(n);
+}
+const normKey = s => String(s||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+const slug = s => String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80)||"x";
+function normSource(kind,s){
+  const k=normKey(s);
+  if(kind==="models"){
+    if(!k) return "Individual";
+    if(k.includes("udit")||k.includes("runway")) return "Udit Runway";
+    if(k.includes("purple")) return "Purple Thoughts";
+    if(k==="tss") return "TSS";
+    if(k.includes("amit")) return "Amit";
+    if(k.includes("lakme")) return "Lakme";
+    if(k.includes("individual")||k.includes("freelance")||k.includes("direct")) return "Individual";
+  } else {
+    if(k.includes("apostrophe")) return "Apostrophe";
+    if(k.includes("debarathi")||k.includes("debarati")) return "Debarathi";
+  }
+  const hit=(S.config.sources[kind]||[]).find(x=>normKey(x)===k);
+  return hit||String(s).trim();
+}
+function mapStatus(raw){
+  const k=String(raw||"").toLowerCase();
+  if(!k.trim()) return "new";
+  if(k.includes("counter")) return "counter";
+  if(k.includes("piyush")) return "pending_piyush";
+  if(k.includes("reject")||k.includes("drop")||k.includes("not selected")) return "dropped";
+  if(k.includes("awaiting")||k.includes("pending")) return "waiting_agency";
+  if(k.includes("lakme")||k.includes("confirmed")) return "confirmed";
+  return "new";
+}
+function handleOf(url){
+  if(!url) return "";
+  const m=String(url).match(/instagram\.com\/([^/?#]+)/i);
+  return m?"@"+m[1]:String(url).replace(/^https?:\/\//,"").slice(0,32);
+}
+function initials(n){return String(n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase()}
+function fmtDate(d,opt){ if(!d) return "date TBC"; const x=new Date(d.length<=10?d+"T00:00":d); if(isNaN(x)) return d; return x.toLocaleDateString("en-IN",opt||{day:"numeric",month:"short"}); }
+function fmtWhen(iso){ if(!iso) return ""; const d=new Date(iso); return d.toLocaleDateString("en-IN",{day:"numeric",month:"short"})+" "+d.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"}); }
+function toast(msg){ const r=$("#toast-root"); r.innerHTML=`<div class="toast" role="status">${esc(msg)}</div>`; clearTimeout(toast.t); toast.t=setTimeout(()=>r.innerHTML="",2600); }
+
+/* ---------- Roles & permissions ---------- */
+const PEOPLE={ankita:{name:"Ankita",color:"#8a7642"},piyush:{name:"Piyush",color:"#68479c"}};
+function can(a){ const r=S.role;
+  if(a==="edit") return r==="ankita"||r==="piyush";
+  if(["settings","sync","delete","restore"].includes(a)) return r==="ankita";
+  return false; }
+function canSetStatus(from,to){ const r=S.role; if(!can("edit")) return false; if(from===to) return true;
+  if(to==="pending_piyush") return r==="ankita";
+  if(from==="new") return r==="ankita";
+  if(from==="pending_piyush") return r==="piyush"||(r==="ankita"&&(to==="new"||to==="dropped"));
+  return true; }
+const canApprove = r => (r.status==="new"&&S.role==="ankita")||(r.status==="pending_piyush"&&S.role==="piyush");
+const canReject = r => canApprove(r)||(S.role==="ankita"&&r.status==="pending_piyush");
+const whoseTurn = r => r.status==="new"?"Waiting for Ankita":r.status==="pending_piyush"?"Waiting for Piyush":"";
+const isPhone = () => window.matchMedia("(max-width: 640px)").matches;
+const VIEW_ONLY_MSG="View only. Sign in as Ankita or Piyush to make changes.";
+async function saveFile({filename,data}){
+  const url=URL.createObjectURL(data instanceof Blob?data:new Blob([data]));
+  const a=document.createElement("a"); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),5000); return {status:"saved"}; }
+
+/* ---------- Domain helpers ---------- */
+const recs = kind => S[kind];
+const rec = (kind,id) => S[kind].find(r=>r.id===id);
+const statuses = kind => S.config.statuses[kind];
+function statusOf(kind,id){ return statuses(kind).find(s=>s.id===id) || {id, label:id||"New", bucket:"review", color:"slate"}; }
+const bucketOf = (kind,r) => statusOf(kind,r.status).bucket;
+const effFee = r => r.finalFee ?? r.counter ?? r.proposal ?? null;
+const measDone = r => r.measStatus==="done";
+/* Availability: H / T / S. A ticked date means the person is confirmed for it. */
+function availKeys(){
+  const d=S.config.dates;
+  return [["ho","H","Head office fitting",d.ho],["taj","T","Taj fitting",d.taj],["show","S","Show",d.show]];
+}
+const isAv = (r,k) => r.avail?.[k]==="yes";
+function flagsOf(kind,r){
+  const b=bucketOf(kind,r), out=[];
+  if(b==="out") return out;
+  const ef=effFee(r);
+  if(!r.insta&&!r.photo) out.push({k:"link",label:r.linkNote==="TBD"?"Link TBD":"No Instagram",c:"c-slate"});
+  if(ef==null) out.push({k:"fee",label:"Fee unknown",c:"c-amber"});
+  if(b==="confirmed"&&r.finalFee==null) out.push({k:"nofinal",label:"Final fee not set",c:"c-blue"});
+  if(b==="confirmed"&&!measDone(r)) out.push({k:"nomeas",label:"Measurement not done",c:"c-violet",hide:true});
+  if(b==="confirmed"&&!isAv(r,"show")) out.push({k:"shownot",label:"Show not confirmed",c:"c-red"});
+  if(b==="confirmed"&&availKeys().some(([k])=>!isAv(r,k))) out.push({k:"availpending",label:"Availability pending",c:"c-slate",hide:true});
+  if(r.fee2025&&ef&&ef>r.fee2025*(1+S.config.hikePct/100)) out.push({k:"hike",label:"+"+Math.round((ef/r.fee2025-1)*100)+"% vs 2025",c:"c-amber"});
+  return out;
+}
+const FLAG_FILTERS = [["link","No Instagram link"],["fee","Fee unknown"],["nofinal","Final fee not set"],["nomeas","Measurement not done"],["shownot","Show day not confirmed"],["availpending","Availability pending"],["hike","Fee hike vs 2025"],["ready","Show-ready"]];
+function isReady(kind,r){ return bucketOf(kind,r)==="confirmed" && isAv(r,"show") && measDone(r) && r.alteration==="Done"; }
+
+/* ---------- DB writes ---------- */
+const chains={};
+function queue(path,fn){ const p=(chains[path]||Promise.resolve()).then(fn); chains[path]=p.catch(()=>{}); return p; }
+function dbErr(e){
+  console.error(e);
+  const c=e&&e.code;
+  if(c==="permission_denied"||c==="invalid_argument") toast("Not allowed for your role. Only Ankita gives the first approval and only Piyush the final one; Settings and Excel sync are Ankita's.");
+  else if(e&&/view-only|offline/.test(e.message||"")) return;
+  else if(c==="quota_exceeded") toast("The tracker's storage is full. Delete old activity or records.");
+  else toast("Couldn't save. Check your connection and try again.");
+}
+async function patchRec(kind,id,patch,logText){
+  if(!S.db) { toast("The tracker isn't connected. Check your internet and reload."); throw new Error("offline"); }
+  if(!can("edit")) { toast(VIEW_ONLY_MSG); throw new Error("view-only"); }
+  const r=rec(kind,id);
+  patch.updatedAt=nowISO(); patch.updatedBy=S.role; patch=clone(patch);
+  try{
+    await queue(KINDS[kind].coll+"/"+id, ()=>S.db.collection(KINDS[kind].coll).doc(id).update(patch));
+    if(logText) logAct(kind,id,r?r.name:"",logText);
+  }catch(e){ dbErr(e); throw e; }
+}
+async function createRec(kind,id,data,logText){
+  if(!can("edit")) { toast(VIEW_ONLY_MSG); throw new Error("view-only"); }
+  data.createdAt=data.createdAt||nowISO(); data.updatedAt=nowISO(); data.updatedBy=S.role; data=clone(data);
+  await queue(KINDS[kind].coll+"/"+id, ()=>S.db.collection(KINDS[kind].coll).doc(id).set(data));
+  if(logText) logAct(kind,id,data.name,logText);
+}
+function logAct(kind,recId,recName,text){
+  if(!S.db) return;
+  S.db.collection("activity").add({at:nowISO(), by:S.role, kind, recId, recName:recName||"", text}).catch(e=>console.warn("log",e));
+}
+async function saveConfig(){
+  if(!S.db) return;
+  if(!can("settings")) return toast("Only Ankita can change settings.");
+  try{ await queue("config/main",()=>S.db.doc("config/main").set(S.config)); }catch(e){ dbErr(e); }
+}
+function newRecord(kind,o){
+  const base={serial:null,name:"",source:"",insta:"",linkNote:"",nextAction:"",fee2025:null,proposal:null,feeNote:"",counter:null,finalFee:null,
+    status:"new",markers:[],avail:{ho:"pending",taj:"pending",show:"pending"},meas:{},measStatus:"not_done",alteration:"Not started",notes:"",approvals:{},origin:"app"};
+  if(kind==="influencers") Object.assign(base,{type:"walking",followers:null});
+  return Object.assign(base,o);
+}
+function uniqueId(kind,name,source){
+  let id=slug(name)+"--"+slug(source), i=2;
+  while(rec(kind,id)) id=slug(name)+"--"+slug(source)+"-"+(i++);
+  return id;
+}
+
+/* ---------- Modal ---------- */
+let modalDone=null;
+function openModal(html,cls=""){
+  $("#modal-root").innerHTML=`<div class="modal-scrim" data-action="modal-scrim"><div class="modal ${cls}" role="dialog" aria-modal="true">${html}</div></div>`;
+  const f=$("#modal-root [data-autofocus]")||$("#modal-root .modal button.primary, #modal-root .modal button.ok"); f&&f.focus();
+}
+function closeModal(result){ $("#modal-root").innerHTML=""; const d=modalDone; modalDone=null; d&&d(result); }
+function confirmBox({title,body,ok="Confirm",okClass="primary"}){
+  return new Promise(res=>{ modalDone=res;
+    openModal(`<header><h3>${esc(title)}</h3></header><div class="mb">${body}</div>
+      <footer><button class="btn" data-action="modal-no">Cancel</button><button class="btn ${okClass}" data-action="modal-yes">${esc(ok)}</button></footer>`,"sm"); });
+}
+function approveText(r){ return r.status==="new"?"It moves to <b>Approval pending Piyush</b>.":"Piyush's approval is recorded and it moves to <b>Waiting on agency</b> so the booking can go out."; }
+async function askApprove(kind,id){
+  const r=rec(kind,id); if(!r) return false;
+  const ok=await confirmBox({title:"Approve "+r.name+"?",body:`<p style="margin:0">Are you sure you want to approve <b>${esc(r.name)}</b> (${esc(r.source)}, ${inr(effFee(r))})? ${approveText(r)}</p>`,ok:"Yes, approve",okClass:"ok"});
+  if(ok){ await approve(kind,id); toast(r.name+" approved"); }
+  return ok;
+}
+async function askReject(kind,id,reason){
+  const r=rec(kind,id); if(!r) return false;
+  const ok=await confirmBox({title:"Reject "+r.name+"?",body:`<p style="margin:0">${esc(r.name)} will move to <b>Dropped</b>.${reason?` Reason: “${esc(reason)}”.`:""} You can bring them back later by changing the status.</p>`,ok:"Yes, reject",okClass:"danger"});
+  if(ok){ await reject(kind,id,reason); toast(r.name+" moved to Dropped"); }
+  return ok;
+}
+async function askBulkApprove(items){
+  if(!items.length) return toast("None of the selected are waiting for approval");
+  const names=items.map(([k,id])=>rec(k,id)?.name).filter(Boolean);
+  const ok=await confirmBox({title:`Approve ${items.length} ${items.length===1?"person":"people"}?`,body:`<p style="margin:0 0 8px">Are you sure you want to approve:</p><p style="margin:0" class="muted">${names.map(esc).join(", ")}</p>`,ok:`Yes, approve ${items.length}`,okClass:"ok"});
+  if(!ok) return false;
+  for(const [k,id] of items) await approve(k,id).catch(()=>{});
+  toast(`Approved ${items.length}`); return true;
+}
+
+/* ---------- Approvals ---------- */
+async function approve(kind,id){
+  const r=rec(kind,id); if(!r) return;
+  if(!canApprove(r)) return toast(r.status==="new"?"Only Ankita can give the first approval.":"Only Piyush can give the final approval.");
+  const stamp={by:S.role, at:nowISO(), via:"app"};
+  if(r.status==="new") await patchRec(kind,id,{status:"pending_piyush",approvals:{ankita:stamp}},"Approved at Ankita's review → Approval pending Piyush");
+  else if(r.status==="pending_piyush") await patchRec(kind,id,{status:"waiting_agency",approvals:{piyush:stamp}},"Approved by Piyush → booking request to agency");
+}
+async function reject(kind,id,reason){
+  const r=rec(kind,id); if(!r) return;
+  if(!canReject(r)) return toast("You can't reject at this stage.");
+  const stage=S.role==="piyush"?"piyush":"ankita";
+  await patchRec(kind,id,{status:"dropped",dropReason:reason||"",approvals:{[stage]:{by:S.role,at:nowISO(),rejected:true,via:"app"}}},"Rejected"+(stage==="piyush"?" at Piyush's approval":" at Ankita's review")+(reason?": "+reason:""));
+}
+
+/* ---------- Rendering: shell ---------- */
+function renderTabs(){
+  const nA=[...S.models,...S.influencers].filter(r=>r.status==="new"||r.status==="pending_piyush").length;
+  $("#tabs").innerHTML=visibleTabs().map(([id,l])=>`<button role="tab" data-tab="${id}" aria-selected="${S.tab===id}">${TAB_ICONS[id]||""}<span class="lbl">${isPhone()?(TAB_SHORT[id]||l):l}</span>${id==="approvals"&&nA?` <span class="badge">${nA}</span>`:""}</button>`).join("");
+}
+const TAB_SHORT={dashboard:"Home",models:"Models",influencers:"Influencers",approvals:"Approvals",desk:"Agencies",import:"Sync",settings:"Settings"};
+const svgI=p=>`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const TAB_ICONS={
+  dashboard:svgI('<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>'),
+  models:svgI('<circle cx="12" cy="7" r="3.5"/><path d="M5 21c.8-4 3.5-6 7-6s6.2 2 7 6"/>'),
+  influencers:svgI('<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>'),
+  approvals:svgI('<path d="M4 12.5l5 5L20 6.5"/>'),
+  desk:svgI('<path d="M4 5h16v11H8l-4 4z"/>'),
+  import:svgI('<path d="M4 8h13l-3-3"/><path d="M20 16H7l3 3"/>'),
+  settings:svgI('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>')
+};
+const visibleTabs = () => TABS.filter(([id])=>!(id==="settings"&&!can("settings"))&&!(id==="import"&&!can("sync")));
+function renderCountdown(){
+  const show=new Date(S.config.dates.show);
+  let t="";
+  if(!isNaN(show)){
+    const ms=show-Date.now();
+    const when=show.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})+", "+show.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"});
+    if(ms>0){ const d=Math.floor(ms/864e5), h=Math.floor(ms%864e5/36e5); t=`<strong class="num">${d}d ${h}h</strong><span>to the show · ${esc(when)}</span>`; }
+    else t=`<strong>Show day</strong><span>${esc(when)}</span>`;
+  }
+  $("#countdown").innerHTML=t;
+}
+function renderMe(){
+  const u=S.authUser, r=S.role;
+  const chip=`<span class="rolechip r-${r}" title="${u?esc(u.email):"Not signed in"}">${r==="guest"?"View only":esc(PEOPLE[r].name)}</span>`;
+  $("#me").innerHTML = u ? `${chip}<button class="btn sm ghost" data-action="sign-out">Sign out</button>`
+    : `${chip}${S.auth?`<button class="btn sm" data-action="sign-in">Sign in</button>`:""}`;
+}
+function go(tab,keepDrawer){
+  if(!visibleTabs().some(t=>t[0]===tab)) tab="dashboard";
+  S.tab=tab;
+  try{ if(location.hash!=="#"+tab) history.replaceState(null,"","#"+tab); }catch(e){}
+  if(!keepDrawer) closeDrawer();
+  renderTabs(); renderMain(true); window.scrollTo(0,0);
+}
+let rafPending=false;
+function scheduleRender(){
+  if(rafPending) return; rafPending=true;
+  requestAnimationFrame(()=>{ rafPending=false; renderTabs(); renderCountdown(); renderMain(false); renderDrawer(false); });
+}
+function focusInside(el){ const a=document.activeElement; return el&&a&&el.contains(a)&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&!["checkbox","radio","file","button"].includes(a.type); }
+document.addEventListener("focusout",()=>{ setTimeout(()=>{ if(S.dirty&&!focusInside($("#main"))&&!focusInside($("#drawer-root"))){ S.dirty=false; renderMain(false); renderDrawer(false);} },0); });
+
+function renderMain(full){
+  const m=$("#main");
+  if(!S.db && S.ready){ m.innerHTML = S.bootMsg==="setup"
+      ? `<div class="setup panel"><h2 class="sec">Almost there</h2><p style="margin:0">The app is online, but it isn't connected to its database yet. Paste your Firebase settings into <b>firebase-config.js</b> in the GitHub repository (see the README, step 3), wait a minute, then reload.</p></div>`
+      : `<div class="setup panel"><h2 class="sec">Can't reach the database</h2><p style="margin:0">Check your internet connection and reload the page.</p><p class="muted" style="margin:0;font-size:13px">${esc(S.bootErr||"")}</p></div>`; return; }
+  if(!S.ready){ return; }
+  if(full || !m.dataset.view || m.dataset.view!==S.tab){
+    m.dataset.view=S.tab;
+    m.innerHTML = SHELLS[S.tab] ? SHELLS[S.tab]() : `<div id="body"></div>`;
+  }
+  const body=$("#body",m);
+  if(!body) return;
+  if(!full && focusInside(body)){ S.dirty=true; return; }
+  body.innerHTML = BODIES[S.tab]();
+  afterRender[S.tab]&&afterRender[S.tab]();
+}
+const afterRender={};
+const SHELLS={}, BODIES={};
+
+/* ---------- Dashboard ---------- */
+const personName = by => by ? (PEOPLE[by]?.name || "Someone") : "Excel import";
+function personColor(by){ return PEOPLE[by]?.color || "var(--slate)"; }
+function dashActs(){
+  const M=S.models, I=S.influencers;
+  const all=[...M.map(r=>["models",r]),...I.map(r=>["influencers",r])];
+  const ofBucket=(b)=>all.filter(([k,r])=>bucketOf(k,r)===b);
+  const confM=M.filter(r=>bucketOf("models",r)==="confirmed");
+  const withFlag=(k)=>all.filter(([kind,r])=>flagsOf(kind,r).some(f=>f.k===k));
+  const fee=([k,r])=>inr(effFee(r));
+  const missing=([k,r])=>{ const m=availKeys().filter(([key])=>!isAv(r,key)).map(([,s,l])=>l); return m.length?"Not confirmed: "+m.join(", "):""; };
+  const agency=ofBucket("agency");
+  const bySrc={}; agency.forEach(([k,r])=>bySrc[r.source]=(bySrc[r.source]||0)+1);
+  return [
+    {l:"Waiting for Ankita's review",s:"New names from agencies",c:"var(--info)",items:ofBucket("review"),note:fee,go:["approvals"]},
+    {l:"Approval pending Piyush",s:"Ankita has approved; Piyush to sign off",c:"var(--violet)",items:ofBucket("internal"),note:fee,go:["approvals"]},
+    {l:"Waiting on agency confirmation",s:Object.entries(bySrc).sort((a,b)=>b[1]-a[1]).map(([s,n])=>`${s} ${n}`).join(" · ")||"None",c:"var(--warn)",items:agency,note:([k,r])=>statusOf(k,r.status).label+" · "+inr(effFee(r)),go:["desk"]},
+    {l:"Confirmed, show day not confirmed",s:"S not ticked in availability",c:"var(--bad)",items:withFlag("shownot"),note:missing,go:["models",{flag:"shownot"}]},
+    {l:"Confirmed, availability not complete",s:"H, T or S still to confirm",c:"var(--slate)",items:withFlag("availpending"),note:missing,go:["models",{flag:"availpending"}]},
+    {l:"Confirmed, measurement not done",s:"Needed before alterations",c:"var(--violet)",items:withFlag("nomeas"),note:([k,r])=>r.nextAction||"",go:["models",{flag:"nomeas"}]},
+    {l:"Confirmed, final fee not set",s:"Needed for the PO",c:"var(--info)",items:withFlag("nofinal"),note:([k,r])=>r.proposal?`Proposed ${inr(r.proposal)}${r.counter?` · counter ${inr(r.counter)}`:""}`:"No quote",go:["models",{flag:"nofinal"}]},
+    {l:"Fee unknown",s:"Agency hasn't quoted",c:"var(--warn)",items:withFlag("fee"),note:([k,r])=>statusOf(k,r.status).label,go:["models",{flag:"fee"}]},
+    {l:"No Instagram link or photo",s:"TBD or blank in the sheet",c:"var(--slate)",items:withFlag("link"),note:([k,r])=>statusOf(k,r.status).label,go:["models",{flag:"link"}]},
+  ];
+}
+function changesPanel(){
+  const acts=S.activity;
+  const last={}; acts.forEach(a=>{ const key=a.by||"_"; if(!last[key]) last[key]=a; });
+  const people=Object.keys(last).filter(k=>k!=="_");
+  const n=S.feedAll?60:12;
+  const kindLabel=k=>k==="influencers"?"Influencer":"Model";
+  return `<div class="panel"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3 class="eyebrow">Latest changes</h3>${acts.length>12?`<button class="btn sm ghost" data-action="feed-toggle">${S.feedAll?"Show fewer":"Show more"}</button>`:""}</div>
+    ${people.length?`<div class="lastby">${people.map(uid=>{const a=last[uid];return `<div class="lb"><b>${esc(personName(uid))}'s last change</b>${esc(a.recName?a.recName+": ":"")}${esc(a.text)}<div class="muted" style="font-size:12px">${fmtWhen(a.at)}</div></div>`}).join("")}</div>`:""}
+    ${acts.length?`<div class="feed">${acts.slice(0,n).map(a=>`<div class="fi"><span class="who-dot" style="background:${personColor(a.by)}">${esc(initials(personName(a.by)))}</span>
+      <div style="min-width:0">${a.recId&&rec(a.kind,a.recId)?`<button class="namebtn" data-action="open" data-kind="${esc(a.kind)}" data-id="${esc(a.recId)}">${esc(a.recName)}</button>`:`<b>${esc(a.recName||"")}</b>`} <span class="muted">· ${kindLabel(a.kind)}</span><div>${esc(a.text)}</div><time>${esc(personName(a.by))} · ${fmtWhen(a.at)}</time></div></div>`).join("")}</div>`
+      :`<p class="muted" style="margin:0">No changes yet. Every approval, status change and edit made in the app shows up here with who made it and when.</p>`}</div>`;
+}
+BODIES.dashboard=()=>{
+  const M=S.models, I=S.influencers, t=S.config.targets, target=t.models||80;
+  const by=(kind,b)=>recs(kind).filter(r=>bucketOf(kind,r)===b);
+  const conf=by("models","confirmed"), agency=by("models","agency");
+  const review=[...by("models","review"),...by("influencers","review")], internal=[...by("models","internal"),...by("influencers","internal")];
+  const spendConf=conf.reduce((a,r)=>a+(effFee(r)||0),0);
+  const spendPipe=[...agency,...by("models","internal"),...by("models","review")].reduce((a,r)=>a+(effFee(r)||0),0);
+  const inflSpend=by("influencers","confirmed").reduce((a,r)=>a+(effFee(r)||0),0);
+  const ready=M.filter(r=>isReady("models",r)).length;
+
+  const reachConf=by("influencers","confirmed").reduce((a,r)=>a+(r.followers||0),0);
+  const reachPipe=I.filter(r=>["review","internal","agency"].includes(bucketOf("influencers",r))).reduce((a,r)=>a+(r.followers||0),0);
+  const walking=I.filter(r=>r.type!=="attending"&&bucketOf("influencers",r)!=="out").length;
+  const attending=I.filter(r=>r.type==="attending"&&bucketOf("influencers",r)!=="out").length;
+
+  const tiles=`<div class="grid g-tiles">
+    <div class="panel tile"><div class="eyebrow">Models confirmed</div><div class="v num">${conf.length} <small>of ${target}</small></div>
+      <div class="meter"><i style="width:${Math.min(100,conf.length/target*100)}%;background:var(--ok)"></i></div>
+      <div class="s">${conf.length>=target?"Target reached":`${target-conf.length} more needed`}</div></div>
+    <div class="panel tile"><div class="eyebrow">Waiting on agencies</div><div class="v num">${agency.length}</div><div class="s">booking or counter-offer replies</div></div>
+    <div class="panel tile"><div class="eyebrow">Approvals pending</div><div class="v num">${review.length+internal.length}</div><div class="s">${review.length} with Ankita · ${internal.length} with Piyush</div></div>
+    <div class="panel tile"><div class="eyebrow">Committed model spend</div><div class="v num">${inrShort(spendConf)}</div><div class="s">+ ${inrShort(spendPipe)} still in the pipeline</div></div>
+    <div class="panel tile"><div class="eyebrow">Show-ready models</div><div class="v num">${ready} <small>of ${conf.length}</small></div><div class="s">show confirmed, measured, garment altered</div></div>
+  </div>`;
+
+  const acts=dashActs(); S._acts=acts;
+  const actHtml=`<div class="panel"><h3 class="eyebrow" style="margin-bottom:6px">What needs doing</h3><div class="actions-list">${acts.map((a,i)=>{const n=a.items.length, open=S.dashOpen===i;return `<div class="act-wrap">
+    <div class="act ${n?"":"zero"}"><span class="stripe" style="background:${a.c}"></span><span class="cnt num">${n}</span><span class="lbl">${esc(a.l)}<small>${esc(a.s)}</small></span>
+      ${n?`<button class="btn sm det" data-action="dash-detail" data-i="${i}" aria-expanded="${open}">${open?"Hide":"Details"}</button>`:""}</div>
+    ${open?`<div class="detail">${a.items.map(([k,r])=>`<div class="di"><button class="namebtn" data-action="open" data-kind="${k}" data-id="${esc(r.id)}">${esc(r.name)}</button><span class="muted">${esc(r.source)}${k==="influencers"?" · influencer":""}${a.note([k,r])?" · "+esc(a.note([k,r])):""}</span></div>`).join("")}
+      <div style="margin-top:6px"><button class="btn sm ghost" data-action="dash-go" data-i="${i}">Open this list ›</button></div></div>`:""}</div>`}).join("")}</div></div>`;
+
+  const total=M.length||1;
+  const fun=BUCKETS.map(b=>({b,n:by("models",b.id).length}));
+  const funnel=`<div class="panel"><h3 class="eyebrow" style="margin-bottom:12px">Model pipeline · ${M.length} names</h3><div class="funnel">${fun.map(({b,n})=>`
+    <div class="frow"><span>${esc(b.label)}</span><div class="fbar"><i style="width:${n/total*100}%;background:var(--${{blue:"info",violet:"violet",amber:"warn",green:"ok",slate:"slate"}[b.color]})"></i></div><span class="num" style="text-align:right">${n}</span></div>`).join("")}</div>
+    <h3 class="eyebrow" style="margin:18px 0 8px">Readiness of confirmed models</h3>
+    <div class="funnel">${[
+      ["Confirmed",conf.length],
+      ["Show confirmed (S)",conf.filter(r=>isAv(r,"show")).length],
+      ["Measurement done",conf.filter(measDone).length],
+      ["Garment altered",conf.filter(r=>r.alteration==="Done").length],
+      ["Show-ready",ready]].map(([l,n])=>`<div class="frow"><span>${l}</span><div class="fbar"><i style="width:${conf.length?n/conf.length*100:0}%;background:var(--gold)"></i></div><span class="num" style="text-align:right">${n}</span></div>`).join("")}</div></div>`;
+
+  const srcs=[...new Set([...S.config.sources.models,...M.map(r=>r.source)])].filter(s=>M.some(r=>r.source===s));
+  const matrix=`<div class="panel"><h3 class="eyebrow" style="margin-bottom:10px">By agency</h3><div class="tablewrap"><table class="matrix"><thead><tr><th>Agency</th>${BUCKETS.map(b=>`<th class="n">${esc(b.label)}</th>`).join("")}<th class="n">Committed</th></tr></thead><tbody>
+    ${srcs.map(s=>{const rs=M.filter(r=>r.source===s);return `<tr><td><button class="namebtn" data-action="dash-src" data-src="${esc(s)}">${esc(s)}</button></td>${BUCKETS.map(b=>{const n=rs.filter(r=>bucketOf("models",r)===b.id).length;return `<td class="n">${n?`<b>${n}</b>`:'<span class="muted">·</span>'}</td>`}).join("")}<td class="n">${inr(rs.filter(r=>bucketOf("models",r)==="confirmed").reduce((a,r)=>a+(effFee(r)||0),0))}</td></tr>`}).join("")||`<tr><td colspan="7" class="muted">No models yet</td></tr>`}
+  </tbody></table></div></div>`;
+
+  const g=t.reach||1;
+  const infl=`<div class="panel"><h3 class="eyebrow">Influencer reach</h3>
+    <div class="tile" style="padding:6px 0 0"><div class="v num">${fmtF(reachConf)} <small>confirmed of ${fmtF(g)} goal</small></div>
+    <div class="meter"><i style="width:${Math.min(100,reachConf/g*100)}%;background:var(--ok)"></i><i style="width:${Math.min(100-Math.min(100,reachConf/g*100),reachPipe/g*100)}%;background:var(--gold);opacity:.5"></i></div>
+    <div class="s">${fmtF(reachPipe)} more in the pipeline · ${walking} walking · ${attending} attending · ${inrShort(inflSpend)} committed</div></div>
+    ${I.length?"":`<p class="muted" style="margin:10px 0 0">No influencers yet. Add them on the Influencers tab when Apostrophe or Debarathi send lists.</p>`}</div>`;
+
+  return `<h2 class="sec">Show overview</h2><p class="sub">Live for Ankita and Piyush. Press <b>Details</b> on any task to see exactly who it covers.</p>
+    ${tiles}<div class="grid g-2" style="margin-top:16px">${actHtml}${changesPanel()}</div><div class="grid g-2" style="margin-top:16px">${funnel}<div class="stack">${infl}${matrix}</div></div>`;
+};
+
+/* ---------- People list (models + influencers) ---------- */
+function listShell(kind){
+  const f=S.f[kind], c=S.config;
+  const isI=kind==="influencers";
+  return `<div class="row" style="justify-content:space-between;margin-bottom:12px"><div><h2 class="sec">${KINDS[kind].label}</h2>
+    <p class="sub" style="margin:0">${isI?"Walking and attending influencers from Apostrophe and Debarathi.":"Every name the agencies have sent, from first review to show-ready."}</p></div>
+    ${can("edit")?`<button class="btn primary" data-action="add-open" data-kind="${kind}">+ Add ${KINDS[kind].one}</button>`:""}</div>
+    <div class="toolbar">
+      <input type="search" id="q-${kind}" placeholder="Search name or handle" value="${esc(f.q)}" data-input="q" data-kind="${kind}" aria-label="Search">
+      <button class="btn sm ftoggle" data-action="filters-toggle" data-kind="${kind}" aria-expanded="${!!f.open}">Filters${["source","bucket","status","flag","type"].filter(k=>f[k]&&f[k]!=="all").length?` (${["source","bucket","status","flag","type"].filter(k=>f[k]&&f[k]!=="all").length})`:""}</button>
+      <div class="filters ${f.open?"open":""}" id="filters-${kind}">
+      <select id="src-${kind}" data-change="filter" data-key="source" data-kind="${kind}" aria-label="Source"><option value="all">All ${isI?"sources":"agencies"}</option>${c.sources[kind].map(s=>`<option ${f.source===s?"selected":""}>${esc(s)}</option>`).join("")}</select>
+      <select id="bk-${kind}" data-change="filter" data-key="bucket" data-kind="${kind}" aria-label="Stage"><option value="all">All stages</option>${BUCKETS.map(b=>`<option value="${b.id}" ${f.bucket===b.id?"selected":""}>${esc(b.label)}</option>`).join("")}</select>
+      <select id="st-${kind}" data-change="filter" data-key="status" data-kind="${kind}" aria-label="Status"><option value="all">All statuses</option>${statuses(kind).map(s=>`<option value="${esc(s.id)}" ${f.status===s.id?"selected":""}>${esc(s.label)}</option>`).join("")}</select>
+      <select id="fl-${kind}" data-change="filter" data-key="flag" data-kind="${kind}" aria-label="Flag or marker"><option value="all">Any flag or marker</option><optgroup label="Needs attention">${FLAG_FILTERS.map(([k,l])=>`<option value="${k}" ${f.flag===k?"selected":""}>${l}</option>`).join("")}</optgroup><optgroup label="Markers">${c.markers[kind].map(m=>`<option value="m:${esc(m.id)}" ${f.flag==="m:"+m.id?"selected":""}>${esc(m.label)}</option>`).join("")}</optgroup></select>
+      ${isI?`<select id="ty-${kind}" data-change="filter" data-key="type" data-kind="${kind}" aria-label="Type"><option value="all">Walking + attending</option><option value="walking" ${f.type==="walking"?"selected":""}>Walking</option><option value="attending" ${f.type==="attending"?"selected":""}>Attending</option></select>`:""}
+      <select id="so-${kind}" data-change="filter" data-key="sort" data-kind="${kind}" aria-label="Sort"><option value="serial" ${f.sort==="serial"?"selected":""}>Sort: Sheet order</option><option value="name" ${f.sort==="name"?"selected":""}>Sort: Name</option><option value="status" ${f.sort==="status"?"selected":""}>Sort: Stage</option><option value="fee" ${f.sort==="fee"?"selected":""}>Sort: Fee high → low</option>${isI?`<option value="followers" ${f.sort==="followers"?"selected":""}>Sort: Followers</option>`:""}<option value="updated" ${f.sort==="updated"?"selected":""}>Sort: Recently updated</option></select>
+      <span class="seg" role="group" aria-label="View"><button data-action="view" data-kind="${kind}" data-v="table" aria-pressed="${f.view==="table"}">Table</button><button data-action="view" data-kind="${kind}" data-v="cards" aria-pressed="${f.view==="cards"}">Cards</button></span>
+      <button class="btn ghost sm" data-action="clear-filters" data-kind="${kind}">Clear</button>
+    </div></div><div id="body"></div>`;
+}
+SHELLS.models=()=>listShell("models");
+SHELLS.influencers=()=>listShell("influencers");
+function filtered(kind){
+  const f=S.f[kind], q=f.q.trim().toLowerCase();
+  let rs=recs(kind).filter(r=>{
+    if(q&&!(String(r.name).toLowerCase().includes(q)||String(r.insta||"").toLowerCase().includes(q))) return false;
+    if(f.source!=="all"&&r.source!==f.source) return false;
+    if(f.bucket!=="all"&&bucketOf(kind,r)!==f.bucket) return false;
+    if(f.status!=="all"&&r.status!==f.status) return false;
+    if(f.type&&f.type!=="all"&&(r.type||"walking")!==f.type) return false;
+    if(f.flag!=="all"){
+      if(f.flag.startsWith("m:")){ if(!(r.markers||[]).includes(f.flag.slice(2))) return false; }
+      else if(f.flag==="ready"){ if(!isReady(kind,r)) return false; }
+      else if(!flagsOf(kind,r).some(x=>x.k===f.flag)) return false;
+    }
+    return true;
+  });
+  const order=s=>statuses(kind).findIndex(x=>x.id===s);
+  const cmp={serial:(a,b)=>(a.serial??9999)-(b.serial??9999)||String(a.name).localeCompare(b.name),
+    name:(a,b)=>String(a.name).localeCompare(b.name),
+    status:(a,b)=>order(a.status)-order(b.status)||String(a.name).localeCompare(b.name),
+    fee:(a,b)=>(effFee(b)||0)-(effFee(a)||0),
+    followers:(a,b)=>(b.followers||0)-(a.followers||0),
+    updated:(a,b)=>String(b.updatedAt||"").localeCompare(String(a.updatedAt||""))}[f.sort]||(()=>0);
+  return rs.sort(cmp);
+}
+function statusSelect(kind,r){
+  const s=statusOf(kind,r.status);
+  if(!can("edit")) return `<span class="pill c-${s.color}">${esc(s.label)}</span>`;
+  return `<select class="status c-${s.color}" data-change="status" data-kind="${kind}" data-id="${esc(r.id)}" aria-label="Status of ${esc(r.name)}">${statuses(kind).map(x=>{const ok=canSetStatus(r.status,x.id);return `<option value="${esc(x.id)}" ${x.id===r.status?"selected":""} ${ok?"":"disabled"}>${esc(x.label)}${ok?"":" (locked)"}</option>`}).join("")}${statuses(kind).some(x=>x.id===r.status)?"":`<option selected>${esc(r.status)}</option>`}</select>`;
+}
+function measSelect(kind,r){
+  const d=measDone(r);
+  if(!can("edit")) return `<span class="pill nodot ${d?"c-green":"c-slate"}">${d?"Done":"Not done"}</span>`;
+  return `<select class="meas ${d?"c-green":"c-slate"}" data-change="meas" data-kind="${kind}" data-id="${esc(r.id)}" aria-label="Measurement for ${esc(r.name)}"><option value="done" ${d?"selected":""}>Done</option><option value="not_done" ${d?"":"selected"}>Not done</option></select>`;
+}
+function photoSrc(r){ return r.photoFile?r.photoFile:(r.photo?"/_blob/"+r.photo:""); }
+function avatar(r,cls="mono"){ const p=photoSrc(r); return `<span class="${cls}">${p?`<img src="${esc(p)}" alt="">`:esc(initials(r.name))}</span>`; }
+function instaLink(r){ return r.insta?`<a class="handle" href="${esc(r.insta)}" target="_blank" rel="noopener">${esc(handleOf(r.insta))} ↗</a>`:`<span class="handle">${r.photoFile||r.photo?"Photo from portfolio":r.linkNote==="TBD"?"Instagram TBD":"No Instagram"}</span>`; }
+function avLetters(r){ return availKeys().map(([k,s,l])=>`<i class="${isAv(r,k)?"av-yes":"av-pending"}" title="${esc(l)}: ${isAv(r,k)?"confirmed":"not confirmed"}">${s}</i>`).join(""); }
+function avButton(kind,r){ if(!can("edit")) return avDots(kind,r); return `<button class="avbtn" data-action="avail-open" data-kind="${kind}" data-id="${esc(r.id)}" aria-label="Availability for ${esc(r.name)}"><span class="avdots">${avLetters(r)}</span><span class="car">▾</span></button>`; }
+function avDots(kind,r){ return `<span class="avdots">${avLetters(r)}</span>`; }
+function listBody(kind){
+  const rs=filtered(kind), f=S.f[kind], sel=S.sel[kind], isI=kind==="influencers";
+  if(!recs(kind).length) return `<div class="panel nodata">${isI?"No influencers yet. Use <b>+ Add influencer</b>, or import a list from <b>Import & export</b> when Apostrophe or Debarathi send one.":"No models yet. Import the <b>Models 2026</b> sheet from <b>Import & export</b>, or add one by hand."}</div>`;
+  const total=rs.reduce((a,r)=>a+(effFee(r)||0),0);
+  const confTotal=rs.filter(r=>bucketOf(kind,r)==="confirmed").reduce((a,r)=>a+(effFee(r)||0),0);
+  const reach=isI?rs.reduce((a,r)=>a+(r.followers||0),0):0;
+  let html;
+  const ed=can("edit");
+  if(!rs.length) html=`<div class="panel nodata">Nothing matches these filters.</div>`;
+  else if(f.view!=="cards"&&isPhone()) html=mobileList(kind,rs);
+  else if(f.view==="cards"){
+    html=`<div class="cards">${rs.map(r=>{const s=statusOf(kind,r.status), p=photoSrc(r);return `<button class="card" data-action="open" data-kind="${kind}" data-id="${esc(r.id)}">
+      <span class="ph">${p?`<img src="${esc(p)}" alt="">`:esc(initials(r.name))}</span>
+      <span class="bd"><span class="nm">${esc(r.name)}</span><span class="rw"><span>${esc(r.source)}</span><span class="num">${inr(effFee(r))}</span></span>
+      <span class="rw"><span class="pill c-${s.color}">${esc(s.label)}</span>${avDots(kind,r)}</span>
+      <span class="rw"><span>${esc(handleOf(r.insta))||(r.linkNote==="TBD"?"Instagram TBD":"No Instagram")}${isI&&r.followers?` · ${fmtF(r.followers)}`:""}</span><span>${measDone(r)?"Measured":"Not measured"}</span></span></span></button>`}).join("")}</div>`;
+  } else {
+    html=`<div class="tablewrap"><table><thead><tr>
+      ${ed?`<th><input type="checkbox" id="selall-${kind}" data-change="selall" data-kind="${kind}" aria-label="Select all" ${rs.length&&rs.every(r=>sel.has(r.id))?"checked":""}></th>`:""}
+      <th class="n">#</th><th>${isI?"Influencer":"Model"}</th><th>${isI?"Source":"Agency"}</th><th>Status</th>
+      ${isI?`<th>Type</th><th class="n">Followers</th>`:`<th class="n">2025</th><th class="n">Proposed</th>`}<th class="n">Final</th>
+      <th title="H = Head office fitting · T = Taj fitting · S = Show">Avail. H·T·S</th><th>Measurement</th><th>Next action</th><th>Flags</th><th></th></tr></thead><tbody>
+      ${rs.map((r,i)=>{const ef=effFee(r);
+        const fin=r.finalFee!=null?inr(r.finalFee):(ef!=null?`<span class="muted" title="${r.counter!=null?"Counter-offer":"Proposed"}; final not set">${inr(ef)}</span>`:"—");
+        const st=r.status;
+        return `<tr>
+        ${ed?`<td><input type="checkbox" id="sel-${kind}-${esc(r.id)}" data-change="sel" data-kind="${kind}" data-id="${esc(r.id)}" ${sel.has(r.id)?"checked":""} aria-label="Select ${esc(r.name)}"></td>`:""}
+        <td class="n muted">${r.serial??i+1}</td>
+        <td><div class="who">${avatar(r)}<div><button class="namebtn" data-action="open" data-kind="${kind}" data-id="${esc(r.id)}">${esc(r.name)}</button>${instaLink(r)}</div></div></td>
+        <td>${esc(r.source)}</td><td>${statusSelect(kind,r)}</td>
+        ${isI?`<td>${r.type==="attending"?"Attending":"Walking"}</td><td class="n">${r.followers?fmtF(r.followers):"—"}</td>`:`<td class="n">${inr(r.fee2025)}</td><td class="n">${inr(r.proposal)}${r.counter!=null?`<span class="handle">counter ${inr(r.counter)}</span>`:""}</td>`}
+        <td class="n">${fin}</td>
+        <td>${avButton(kind,r)}</td><td>${measSelect(kind,r)}</td><td style="min-width:140px;font-size:13px">${esc(r.nextAction||"")}</td>
+        <td><div class="flags">${flagsOf(kind,r).filter(x=>!x.hide).map(x=>`<span class="flag ${x.c}">${esc(x.label)}</span>`).join("")}${(r.markers||[]).map(m=>{const mk=S.config.markers[kind].find(x=>x.id===m);return mk?`<span class="flag c-gold">${esc(mk.label)}</span>`:""}).join("")}</div></td>
+        <td>${canApprove(r)?`<button class="btn sm" data-action="approve" data-kind="${kind}" data-id="${esc(r.id)}" title="${st==="new"?"Approve and send to Piyush":"Approve and send to agency"}">Approve</button>`:(whoseTurn(r)?`<span class="waiting-note">${whoseTurn(r)}</span>`:"")}</td>
+      </tr>`}).join("")}</tbody></table></div>`;
+  }
+  return html+`<div class="footer-sum"><span><b class="num">${rs.length}</b> shown</span><span>Total fee <b class="num">${inr(total)}</b></span><span>Confirmed <b class="num">${inr(confTotal)}</b></span>${isI?`<span>Reach <b class="num">${fmtF(reach)}</b></span>`:""}
+    ${sel.size&&ed?`<span class="bulk"><span>${sel.size} selected</span><select id="bulk-${kind}" aria-label="Set status for selected"><option value="">Set status…</option>${statuses(kind).map(s=>`<option value="${esc(s.id)}">${esc(s.label)}</option>`).join("")}</select><button class="btn sm primary" data-action="bulk-status" data-kind="${kind}">Apply</button><button class="btn sm" data-action="bulk-approve" data-kind="${kind}">Approve selected</button><button class="btn sm ghost" data-action="sel-clear" data-kind="${kind}">Clear</button></span>`:""}</div>`;
+}
+function mobileList(kind,rs){
+  return `<div class="mlist">${rs.map(r=>{const s=statusOf(kind,r.status);return `<div class="mcard">
+    <button class="mmain" data-action="open" data-kind="${kind}" data-id="${esc(r.id)}">${avatar(r)}
+      <span class="mtxt"><b>${esc(r.name)}</b><small>${esc(r.source)}${r.serial!=null?" · #"+r.serial:""}${kind==="influencers"&&r.followers?" · "+fmtF(r.followers):""}</small><span><span class="pill c-${s.color}">${esc(s.label)}</span></span></span>
+      <span class="mfee num">${inr(effFee(r))}${avDots(kind,r)}<small>${measDone(r)?"Measured":"Not measured"}</small></span></button>
+    ${canApprove(r)?`<button class="btn sm ok mappr" data-action="approve" data-kind="${kind}" data-id="${esc(r.id)}">Approve ${esc(r.name)}</button>`:""}</div>`}).join("")}</div>`;
+}
+BODIES.models=()=>listBody("models");
+BODIES.influencers=()=>listBody("influencers");
+
+/* Availability popover (H / T / S multi-select) */
+let popFor=null;
+function openAvailPop(btn,kind,id){
+  const r=rec(kind,id); if(!r) return;
+  popFor={kind,id};
+  const rect=btn.getBoundingClientRect();
+  $("#pop-root").innerHTML=`<div class="pop" id="pop" role="dialog" aria-label="Availability for ${esc(r.name)}"><div class="eyebrow" style="padding:4px 8px">${esc(r.name)} · confirmed for</div>
+    ${availKeys().map(([k,s,l,dt])=>`<label><input type="checkbox" id="pa-${k}" data-change="avail-chk" data-k="${k}" ${isAv(r,k)?"checked":""}><span><b>${s}</b> · ${esc(l)}<small>${fmtDate(dt,{weekday:"short",day:"numeric",month:"short"})}</small></span></label>`).join("")}</div>`;
+  const pop=$("#pop"), w=pop.offsetWidth, h=pop.offsetHeight;
+  let left=Math.min(rect.left, window.innerWidth-w-12), top=rect.bottom+4;
+  if(top+h>window.innerHeight-8) top=Math.max(8,rect.top-h-4);
+  pop.style.left=Math.max(8,left)+"px"; pop.style.top=top+"px";
+}
+function closePop(){ popFor=null; $("#pop-root").innerHTML=""; }
+
+/* Add model / influencer */
+function addModalHtml(kind){
+  const isI=kind==="influencers", c=S.config;
+  const fld=(id,label,ph="",type="text",req=false)=>`<label class="f"><span class="${req?"req":""}">${label}</span><input type="text" ${type==="num"?'inputmode="numeric"':""} id="${id}" placeholder="${esc(ph)}" ${req?"data-autofocus":""}></label>`;
+  return `<header><h3>Add ${KINDS[kind].one}</h3><div class="muted" style="font-size:13px">Same fields as the Models 2026 sheet. Only the name is required.</div></header>
+  <div class="mb">
+    <div class="fgrid">
+      ${fld("nw-name",isI?"Influencer name":"Model name",isI?"e.g. Riya Sharma":"e.g. Aarav N","text",true)}
+      <label class="f">${isI?"Source":"Agency"}<select id="nw-src">${c.sources[kind].map(s=>`<option>${esc(s)}</option>`).join("")}</select></label>
+      ${fld("nw-insta","Instagram URL","https://instagram.com/… or @handle")}
+      ${isI?fld("nw-fol","Followers","e.g. 1.2m or 450k","num")+`<label class="f">Type<select id="nw-type"><option value="walking">Walking</option><option value="attending">Attending</option></select></label>`:fld("nw-fee25","2025 fee (₹)","e.g. 15000","num")}
+      ${fld("nw-prop","Proposed fee (₹)","e.g. 18000 or 18k","num")}
+      ${fld("nw-final","Final fee (₹)","if agreed","num")}
+      ${fld("nw-feenote","Fee remark","OK / TBC / 17k")}
+      <label class="f">Status<select id="nw-status">${statuses(kind).map(s=>`<option value="${esc(s.id)}">${esc(s.label)}</option>`).join("")}</select></label>
+      <label class="f">Measurement<select id="nw-meas"><option value="not_done">Not done</option><option value="done">Done</option></select></label>
+    </div>
+    ${fld("nw-next","Remarks / next action","e.g. Call for measurements")}
+    <div><div class="eyebrow" style="margin-bottom:6px">Availability confirmed for</div><div class="chipset">${availKeys().map(([k,s,l])=>`<label class="check chip"><input type="checkbox" id="nw-av-${k}"> ${s} · ${esc(l)}</label>`).join("")}</div></div>
+  </div>
+  <footer><span class="err" id="nw-err"></span><button class="btn" data-action="modal-no">Cancel</button><button class="btn primary" data-action="add-save" data-kind="${kind}">Add ${KINDS[kind].one}</button></footer>`;
+}
+async function saveNew(kind,btn){
+  const v=id=>($("#"+id)?.value||"").trim(), err=m=>{ $("#nw-err").textContent=m; };
+  const name=v("nw-name"); if(!name) return err("Enter a name.");
+  const source=v("nw-src");
+  if(recs(kind).some(r=>normKey(r.name)===normKey(name)&&r.source===source)) return err(`${name} from ${source} is already in the list.`);
+  const nums={}; for(const [id,key] of [["nw-fee25","fee2025"],["nw-prop","proposal"],["nw-final","finalFee"],["nw-fol","followers"]]){ const raw=v(id); if(!raw) continue; const n=parseNum(raw); if(n==null) return err(`"${raw}" isn't a number. Try 18000 or 18k.`); nums[key]=n; }
+  let insta=v("nw-insta"); if(insta) insta=/^https?:\/\//i.test(insta)?insta:insta.startsWith("@")?"https://www.instagram.com/"+insta.slice(1):"https://"+insta;
+  const note=v("nw-feenote");
+  const o=Object.assign({name,source,insta,feeNote:note,counter:/^(ok|tbc)$/i.test(note)?null:parseNum(note),nextAction:v("nw-next"),status:v("nw-status"),measStatus:v("nw-meas"),
+    serial:Math.max(0,...recs(kind).map(r=>r.serial||0))+1},nums);
+  if(kind==="influencers") o.type=v("nw-type");
+  const rec0=newRecord(kind,o);
+  availKeys().forEach(([k])=>{ rec0.avail[k]=$("#nw-av-"+k)?.checked?"yes":"pending"; });
+  if(!S.db) return err("The tracker isn't connected. Open it in claude.ai while signed in.");
+  btn.disabled=true;
+  try{ await createRec(kind,uniqueId(kind,name,source),rec0,"Added by hand"); closeModal(true); toast(`${name} added`); }
+  catch(e){ btn.disabled=false; err("Couldn't save. Check your connection and edit access, then try again."); }
+}
+
+/* ---------- Approvals ---------- */
+BODIES.approvals=()=>{
+  const all=k=>[...S.models.filter(r=>r.status===k).map(r=>["models",r]),...S.influencers.filter(r=>r.status===k).map(r=>["influencers",r])];
+  const q=(title,sub,items,stage)=>{
+    const ids=items.map(([k,r])=>k+"|"+r.id), nsel=ids.filter(x=>S.sel.approvals.has(x)).length;
+    return `<section class="queue"><div class="qhead"><div><h3>${title} <span class="badge">${items.length}</span></h3><div class="muted" style="font-size:13px">${sub}</div></div>
+      ${items.length&&((stage==="ankita"&&S.role==="ankita")||(stage==="piyush"&&S.role==="piyush"))?`<div class="row"><button class="btn sm" data-action="appr-selall" data-stage="${stage}">${nsel===items.length?"Clear selection":"Select all"}</button><button class="btn sm ok" data-action="appr-bulk" data-stage="${stage}" ${nsel?"":"disabled"}>Approve ${nsel||""} selected</button></div>`:""}</div>
+      ${items.length?items.map(([k,r])=>{const key=k+"|"+r.id, ef=effFee(r);return `<div class="acard">
+        ${canApprove(r)?`<input type="checkbox" id="ap-${esc(key)}" data-change="appr-sel" data-key="${esc(key)}" ${S.sel.approvals.has(key)?"checked":""} aria-label="Select ${esc(r.name)}" class="acheck" style="margin-top:10px">`:'<span class="acheck"></span>'}
+        ${avatar(r)}
+        <div style="min-width:0"><button class="namebtn" data-action="open" data-kind="${k}" data-id="${esc(r.id)}">${esc(r.name)}</button> <span class="pill nodot c-gold">${k==="models"?"Model":(r.type==="attending"?"Attending influencer":"Walking influencer")}</span>
+          <div class="meta">${esc(r.source)} · ${instaLink(r).replace('class="handle"','class="handle" style="display:inline"')}</div>
+          <div class="meta num">Fee ${inr(ef)}${r.fee2025?` · 2025: ${inr(r.fee2025)}`:""}${k==="influencers"&&r.followers?` · ${fmtF(r.followers)} followers`:""}${r.approvals?.ankita&&stage==="piyush"?` · Ankita ✓ ${fmtWhen(r.approvals.ankita.at)}`:""}</div></div>
+        ${canApprove(r)?`<div class="btns"><button class="btn sm ok" data-action="approve" data-kind="${k}" data-id="${esc(r.id)}">${stage==="ankita"?"Approve → send to Piyush":"Approve → book with agency"}</button>
+          <input type="text" id="rr-${esc(key)}" placeholder="Reason if rejecting (optional)" aria-label="Rejection reason"><button class="btn sm danger" data-action="reject" data-kind="${k}" data-id="${esc(r.id)}" data-key="${esc(key)}">Reject</button></div>`:`<div class="btns waiting-note">${whoseTurn(r)}${S.role==="guest"?"":" · only "+(stage==="ankita"?"Ankita":"Piyush")+" can approve this step"}</div>`}</div>`}).join(""):`<div class="panel nodata">Nothing waiting here.</div>`}</section>`;
+  };
+  return `<h2 class="sec">Approvals</h2><p class="sub">Ankita reviews new names first. Each approval moves the person to <b>Approval pending Piyush</b>. When Piyush approves, the booking request goes to the agency. Both approvals are stamped with name and time.</p>
+    <div class="queues">${S.role==="piyush"?q("Approval pending Piyush","Approved by Ankita, waiting for you",all("pending_piyush"),"piyush")+q("Ankita's review","New names Ankita hasn't reviewed yet",all("new"),"ankita"):q("Ankita's review","New names sent by agencies",all("new"),"ankita")+q("Approval pending Piyush","Approved by Ankita, waiting for Piyush",all("pending_piyush"),"piyush")}</div>`;
+};
+
+/* ---------- Agency desk ---------- */
+BODIES.desk=()=>{
+  const srcs=[...S.config.sources.models.map(s=>["models",s]),...S.config.sources.influencers.map(s=>["influencers",s])];
+  const info=([kind,s])=>{const rs=recs(kind).filter(r=>r.source===s);return{kind,s,
+    book:rs.filter(r=>bucketOf(kind,r)==="agency"),
+    avail:rs.filter(r=>bucketOf(kind,r)==="confirmed"&&availKeys().some(([k])=>!isAv(r,k))),
+    meas:rs.filter(r=>bucketOf(kind,r)==="confirmed"&&!measDone(r))};};
+  const all=srcs.map(info);
+  if(!S.desk.source||!all.some(x=>x.s===S.desk.source)){ const first=all.find(x=>x.book.length+x.avail.length+x.meas.length)||all[0]; S.desk.source=first?first.s:null; }
+  const cur=all.find(x=>x.s===S.desk.source);
+  const list=`<div class="srclist">${all.map(x=>{const n=x.book.length+x.avail.length+x.meas.length;return `<button class="srcbtn" data-action="desk-src" data-src="${esc(x.s)}" aria-pressed="${x.s===S.desk.source}"><span>${esc(x.s)}<br><small>${x.kind==="models"?"Model agency":"Influencer agency"}</small></span><span class="muted" style="font-size:13px;text-align:right">${x.book.length} booking · ${x.avail.length} availability · ${x.meas.length} measurements</span></button>`}).join("")}</div>`;
+  const sec=S.desk.sec;
+  return `<h2 class="sec">Agency desk</h2><p class="sub">Pick an agency. The app writes the follow-up message from live statuses. Copy it into WhatsApp or email.</p>
+    <div class="desk"><div class="panel">${list}</div>
+    <div class="panel stack">${cur?`<div class="row">
+      <label class="check"><input type="checkbox" id="ds-book" data-change="desk-sec" data-k="book" ${sec.book?"checked":""}> Bookings & counter-offers (${cur.book.length})</label>
+      <label class="check"><input type="checkbox" id="ds-avail" data-change="desk-sec" data-k="avail" ${sec.avail?"checked":""}> Availability (${cur.avail.length})</label>
+      <label class="check"><input type="checkbox" id="ds-meas" data-change="desk-sec" data-k="meas" ${sec.meas?"checked":""}> Measurements (${cur.meas.length})</label></div>
+      <textarea class="msg" id="deskmsg" readonly aria-label="Message to agency">${esc(deskMessage(cur))}</textarea>
+      <div class="row"><button class="btn primary" data-action="copy-msg">Copy message</button><span class="muted" style="font-size:13px">Statuses don't change when you copy. Update them here once the agency replies.</span></div>`:`<div class="nodata">No agencies set up.</div>`}</div></div>`;
+};
+function deskMessage(x){
+  const d=S.config.dates, sec=S.desk.sec, lines=[];
+  const show=new Date(d.show);
+  const showTxt=isNaN(show)?"show day":show.toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"})+", "+show.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"});
+  lines.push(`Hi ${x.s} team,`,"",`Following up for Tasva × Lakmé Fashion Week 2026. Show: ${showTxt}.`);
+  let any=false;
+  if(sec.book&&x.book.length){ any=true;
+    const cnt=x.book.filter(r=>r.status==="counter"), bk=x.book.filter(r=>r.status!=="counter");
+    if(bk.length){ lines.push("","Please confirm these bookings:"); bk.forEach((r,i)=>lines.push(`${i+1}. ${r.name} · ${effFee(r)!=null?inr(effFee(r)):"fee to be shared"}`)); }
+    if(cnt.length){ lines.push("","Our counter-offers. Please confirm:"); cnt.forEach((r,i)=>lines.push(`${i+1}. ${r.name} · our offer ${inr(r.counter??r.finalFee)}${r.proposal?` (quoted ${inr(r.proposal)})`:""}`)); }
+  }
+  if(sec.avail&&x.avail.length){ any=true;
+    lines.push("","Please confirm availability:");
+    x.avail.forEach((r,i)=>{ const p=availKeys().filter(([k])=>!isAv(r,k)).map(([k,s,l,dt])=>`${l} (${fmtDate(dt)})`); lines.push(`${i+1}. ${r.name}: ${p.join(", ")}`); });
+  }
+  if(sec.meas&&x.meas.length){ any=true;
+    lines.push("","Please share measurements (height, chest, waist, hips, shoulder, sleeve, inseam, shoe size):");
+    x.meas.forEach((r,i)=>lines.push(`${i+1}. ${r.name}`));
+  }
+  if(!any) lines.push("","Nothing pending from your side right now. Thank you!");
+  lines.push("","Thanks,",(PEOPLE[S.role]?.name||"Tasva Marketing"));
+  return lines.join("\n");
+}
+
+/* ---------- Excel parsing (shared by sync and agency import) ---------- */
+function sheetRows(wb,name){ return XLSX.utils.sheet_to_json(wb.Sheets[name],{header:1,raw:false,defval:"",blankrows:true}); }
+function findCols(kind,rows){
+  let hi=rows.findIndex(r=>r.some(c=>/model name|^name$|influencer/i.test(String(c).trim())));
+  if(hi<0) hi=0;
+  const h=(rows[hi]||[]).map(c=>String(c).replace(/ /g," ").trim().toLowerCase());
+  const find=(re,from=0)=>{for(let i=from;i<h.length;i++) if(re.test(h[i])) return i; return -1;};
+  const cols={};
+  cols.serial=find(/^s\.? ?no|serial|^#$/);
+  if(kind==="models"){
+    cols.name=find(/model name|^name$/); cols.source=find(/agency|source/);
+    cols.url=find(/url|instagram|link/); cols.nextAction=find(/remark/); cols.fee2025=find(/2025/); cols.proposal=find(/proposal|proposed|quote/);
+    cols.feeNote=cols.proposal>=0?find(/remark/,cols.proposal+1):-1; cols.finalFee=find(/final/); cols.status=find(/^status/);
+  } else {
+    cols.name=find(/^name$|influencer|creator/); cols.source=find(/source|agency/); cols.url=find(/insta|url|link|handle/);
+    cols.followers=find(/follower|reach/); cols.type=find(/^type|category|walk/); cols.proposal=find(/proposal|proposed|^fee|cost|commercial/);
+    cols.finalFee=find(/final/); cols.status=find(/^status/); cols.nextAction=find(/remark/);
+    if(cols.finalFee===cols.proposal) cols.finalFee=-1;
+  }
+  cols.avail=find(/^avail/); cols.meas=find(/^measurement/); cols.notes=find(/^notes?$/);
+  cols.ankita=find(/^ankita approved/); cols.piyush=find(/^piyush approved/); cols.appId=find(/^app id$/);
+  return {hi,cols};
+}
+function parseAvail(t){
+  const s=String(t||"").toUpperCase().replace(/HEAD OFFICE|\bHO\b/g,"H").replace(/TAJ/g,"T").replace(/SHOW/g,"S").replace(/[^HTS]/g,"");
+  return ["H","T","S"].filter(x=>s.includes(x)).join(",");
+}
+const parseMeas = t => /not/i.test(t)?"not_done":/done|yes|taken|✓/i.test(t)?"done":"not_done";
+function mapStatusK(kind,raw){ const t=String(raw||"").trim().toLowerCase(); if(t){ const hit=statuses(kind).find(s=>s.label.toLowerCase()===t); if(hit) return hit.id; } return mapStatus(raw); }
+function parseImport(kind,rows){
+  const {hi,cols}=findCols(kind,rows);
+  if(cols.name<0) return {error:"Couldn't find a Name column in this sheet. Check the header row."};
+  const g=(r,k)=>cols[k]>=0?String(r[cols[k]]??"").replace(/ /g," ").trim():"";
+  const out=[];
+  rows.forEach((r,ri)=>{
+    if(ri<=hi) return;
+    const name=g(r,"name"); if(!name) return;
+    const url=g(r,"url"); const note=g(r,"feeNote");
+    let na=g(r,"nextAction"); na=na?na[0].toUpperCase()+na.slice(1).toLowerCase():"";
+    const d={rowIdx:ri, name, source:normSource(kind,g(r,"source")), insta:/^https?:|instagram\.com/i.test(url)?(url.startsWith("http")?url:"https://"+url):(url.startsWith("@")?"https://www.instagram.com/"+url.slice(1):""),
+      linkNote:/^tbd$/i.test(url)?"TBD":"", nextAction:na, proposal:parseNum(g(r,"proposal")), finalFee:parseNum(g(r,"finalFee")), status:mapStatusK(kind,g(r,"status")), statusRaw:g(r,"status"),
+      serial:parseNum(g(r,"serial"))};
+    if(kind==="models"){ d.fee2025=parseNum(g(r,"fee2025")); d.feeNote=note; d.counter=/^(ok|tbc)$/i.test(note)?null:parseNum(note); }
+    else { d.followers=parseNum(g(r,"followers")); d.type=/attend|guest/i.test(g(r,"type"))?"attending":"walking"; }
+    if(cols.avail>=0) d.avail=parseAvail(g(r,"avail"));
+    if(cols.meas>=0) d.measStatus=parseMeas(g(r,"meas"));
+    if(cols.notes>=0) d.notes=g(r,"notes");
+    if(cols.appId>=0) d.appId=g(r,"appId");
+    out.push(d);
+  });
+  return {cols,hi,rows:out};
+}
+/* A parsed sheet row → a new app record */
+function recordFromParsed(kind,d){
+  const o=Object.assign({},d); const av=o.avail;
+  ["statusRaw","appId","rowIdx","avail"].forEach(k=>delete o[k]);
+  Object.keys(o).forEach(k=>o[k]===undefined&&delete o[k]);
+  const data=newRecord(kind,o); data.origin="excel";
+  if(av!=null) data.avail=availFromLetters(av);
+  if(data.status!=="new"&&data.status!=="dropped") data.approvals.ankita={by:null,at:null,via:"excel"};
+  if(["waiting_agency","counter","confirmed"].includes(data.status)) data.approvals.piyush={by:null,at:null,via:"excel"};
+  return data;
+}
+const availFromLetters = s => ({ho:s.includes("H")?"yes":"pending", taj:s.includes("T")?"yes":"pending", show:s.includes("S")?"yes":"pending"});
+const availStr = r => availKeys().filter(([k])=>isAv(r,k)).map(([,s])=>s).join(",");
+
+/* ---------- Excel sync: field model ---------- */
+const STATUS_XL={new:"",pending_piyush:"Piyush",waiting_agency:"Awaiting confirmation from agency",counter:"Counter proposal confirmation awaited",confirmed:"Confirmed",dropped:"Rejected"};
+const statusToXl=(kind,id)=>id in STATUS_XL?STATUS_XL[id]:statusOf(kind,id).label;
+const SYNC_FIELDS={
+  models:[["serial","S No"],["name","Name"],["source","Agency"],["insta","Instagram"],["nextAction","Remarks"],["fee2025","2025 fee"],["proposal","Proposal"],["feeNote","Fee remark"],["finalFee","Final fee"],["status","Status"],["avail","Availability"],["measStatus","Measurement"],["notes","Notes"]],
+  influencers:[["serial","S No"],["name","Name"],["source","Source"],["insta","Instagram"],["followers","Followers"],["type","Type"],["nextAction","Remarks"],["proposal","Proposal"],["finalFee","Final fee"],["status","Status"],["avail","Availability"],["measStatus","Measurement"],["notes","Notes"]]};
+const colKey = f => ({insta:"url",measStatus:"meas"})[f]||f;
+const fmtK = n => n%1000===0?(n/1000)+"k":String(n);
+function feeCellText(r){
+  const derived=/^(ok|tbc)$/i.test(r.feeNote||"")?null:parseNum(r.feeNote);
+  if(r.counter!=null&&derived!==r.counter) return fmtK(r.counter);
+  return r.feeNote||"";
+}
+function recVal(kind,r,f){
+  if(f==="avail") return availStr(r);
+  if(f==="measStatus") return measDone(r)?"done":"not_done";
+  if(f==="feeNote") return feeCellText(r);
+  if(f==="type") return r.type||"walking";
+  return r[f];
+}
+function keyOf(f,v){
+  if(v==null||v==="") return "";
+  if(f==="insta") return String(v).toLowerCase().replace(/^https?:\/\//,"").replace(/^www\./,"").replace(/[?#].*$/,"").replace(/\/+$/,"");
+  if(f==="source") return normKey(v);
+  if(typeof v==="number") return String(v);
+  return String(v).toLowerCase().replace(/\s+/g," ").trim();
+}
+function showVal(kind,f,v){
+  if(v==null||v==="") return "—";
+  if(["fee2025","proposal","finalFee"].includes(f)) return inr(v);
+  if(f==="followers") return fmtF(v);
+  if(f==="status") return statusOf(kind,v).label;
+  if(f==="measStatus") return v==="done"?"Done":"Not done";
+  if(f==="type") return v==="attending"?"Attending":"Walking";
+  if(f==="avail") return v.split(",").join(" ");
+  return String(v);
+}
+function cellVal(kind,f,r){
+  switch(f){
+    case "insta": return r.insta||(r.linkNote==="TBD"?"TBD":"");
+    case "feeNote": return feeCellText(r);
+    case "status": return statusToXl(kind,r.status);
+    case "avail": return availStr(r).split(",").filter(Boolean).join(", ");
+    case "measStatus": return measDone(r)?"Done":"Not done";
+    case "type": return r.type==="attending"?"Attending":"Walking";
+    default: return r[f]??"";
+  }
+}
+function findSheet(wb,kind){
+  return kind==="models" ? wb.SheetNames.find(n=>/models\s*2026/i.test(n)) : wb.SheetNames.find(n=>/influenc/i.test(n));
+}
+function matchRows(kind,rows,snap){
+  const appKey=new Map(recs(kind).map(r=>[normKey(r.name)+"|"+normKey(r.source),r.id]));
+  const snapKey=new Map(Object.entries(snap?.rows||{}).map(([id,v])=>[v._k,id]));
+  const used=new Set();
+  return rows.map(d=>{
+    const key=normKey(d.name)+"|"+normKey(d.source); let id=null;
+    if(d.appId&&rec(kind,d.appId)) id=d.appId; else if(snapKey.has(key)) id=snapKey.get(key); else if(appKey.has(key)) id=appKey.get(key);
+    if(id&&used.has(id)) id="__dup"; else if(id) used.add(id);
+    return {d,id,key};
+  });
+}
+
+/* ---------- Excel → app (three-way merge against the last-sync snapshot) ---------- */
+function buildSyncPlan(kind,wb,sheet,file){
+  const parsed=parseImport(kind,sheetRows(wb,sheet));
+  if(parsed.error) return {kind,sheet,error:parsed.error};
+  const snap=S.sync[kind], fields=SYNC_FIELDS[kind].filter(([f])=>parsed.cols[colKey(f)]>=0);
+  const p={kind,sheet,file,fields,updates:[],conflicts:[],add:[],missing:[],dups:[],same:0,snapRows:{},firstTime:!snap};
+  const seen=new Set();
+  for(const {d,id,key} of matchRows(kind,parsed.rows,snap)){
+    if(id==="__dup"){ p.dups.push(d.name); continue; }
+    const r=id&&rec(kind,id);
+    const ekeys={}; fields.forEach(([f])=>ekeys[f]=keyOf(f,d[f]));
+    if(id&&!r) continue;              // deleted in the app on purpose
+    if(!r){ p.add.push({d,ekeys,key}); continue; }
+    seen.add(id); p.snapRows[id]=Object.assign({_k:key},ekeys);
+    const base=snap?.rows?.[id], ups=[], cons=[];
+    for(const [f,label] of fields){
+      const av=recVal(kind,r,f), ek=ekeys[f], ak=keyOf(f,av); if(ek===ak) continue;
+      const item={f,label,app:showVal(kind,f,av),xl:showVal(kind,f,d[f]),val:d[f]};
+      if(base&&f in base){ const bk=base[f]; if(ek===bk) continue; if(ak===bk) ups.push(item); else cons.push(Object.assign(item,{take:false})); }
+      else if(ak==="") ups.push(item);
+      else if(ek!=="") cons.push(Object.assign(item,{take:false}));
+    }
+    if(ups.length) p.updates.push({id,name:r.name,items:ups});
+    if(cons.length) p.conflicts.push({id,name:r.name,items:cons});
+    if(!ups.length&&!cons.length) p.same++;
+  }
+  if(snap?.rows) for(const id of Object.keys(snap.rows)){ const r=rec(kind,id); if(r&&!seen.has(id)&&bucketOf(kind,r)!=="out") p.missing.push({id,name:r.name,source:r.source,drop:false}); }
+  return p;
+}
+function patchFromItems(items){
+  const patch={};
+  for(const it of items){
+    const v=it.val;
+    if(it.f==="avail") patch.avail=availFromLetters(v||"");
+    else if(it.f==="feeNote"){ patch.feeNote=v||""; patch.counter=/^(ok|tbc)$/i.test(v||"")?null:parseNum(v); }
+    else if(it.f==="insta"){ patch.insta=v||""; if(v) patch.linkNote=""; }
+    else patch[it.f]=(v===undefined?null:v);
+  }
+  return patch;
+}
+const syncChangeCount = p => p.updates.reduce((a,u)=>a+u.items.length,0)+p.conflicts.reduce((a,c)=>a+c.items.filter(i=>i.take).length,0)+p.add.length+p.missing.filter(m=>m.drop).length;
+async function applySync(){
+  const s=S.syncIn; if(!s||!S.db) return;
+  const total=s.plans.reduce((a,p)=>a+p.updates.length+p.conflicts.filter(c=>c.items.some(i=>i.take)).length+p.add.length+p.missing.filter(m=>m.drop).length,0);
+  let n=0; const tick=()=>{ s.busy=`Saving ${++n} of ${total}…`; renderMain(true); };
+  const done=[];
+  try{
+    for(const p of s.plans){
+      if(p.error) continue;
+      const kind=p.kind, snapRows=Object.assign({},p.snapRows);
+      const lockOk=(id,it)=>{ if(it.f!=="status") return true; const r=rec(kind,id); if(r&&canSetStatus(r.status,it.val)) return true; s.skipped=(s.skipped||[]).concat(`${r?r.name:id}: ${it.app} → ${it.xl}`); return false; };
+      p.updates.forEach(u=>u.items=u.items.filter(it=>lockOk(u.id,it))); p.conflicts.forEach(c=>c.items=c.items.filter(it=>!it.take||lockOk(c.id,it)));
+      for(const u of p.updates){ if(!u.items.length) continue; await patchRec(kind,u.id,patchFromItems(u.items),"From Excel: "+u.items.map(i=>`${i.label} ${i.app} → ${i.xl}`).join("; ")); tick(); }
+      for(const c of p.conflicts){ const take=c.items.filter(i=>i.take); if(!take.length) continue;
+        await patchRec(kind,c.id,patchFromItems(take),"From Excel (chosen over app): "+take.map(i=>`${i.label} → ${i.xl}`).join("; ")); tick(); }
+      for(const a of p.add){ const id=uniqueId(kind,a.d.name,a.d.source); await createRec(kind,id,recordFromParsed(kind,a.d),"Added from Excel ("+p.sheet+")"); snapRows[id]=Object.assign({_k:a.key},a.ekeys); tick(); }
+      for(const m of p.missing){ if(m.drop){ await patchRec(kind,m.id,{status:"dropped",dropReason:"Removed from the Excel sheet"},"Missing from Excel → Dropped"); tick(); }
+        if(S.sync[kind]?.rows?.[m.id]) snapRows[m.id]=S.sync[kind].rows[m.id]; }
+      await queue("sync/"+kind,()=>S.db.doc("sync/"+kind).set({rows:snapRows,at:nowISO(),by:S.role,file:s.file,sheet:p.sheet}));
+      done.push(`${KINDS[kind].label}: ${p.updates.reduce((a,u)=>a+u.items.length,0)} updates, ${p.conflicts.reduce((a,c)=>a+c.items.filter(i=>i.take).length,0)} conflicts taken from Excel, ${p.add.length} added`);
+    }
+    S.syncIn={done:"Sync finished. "+done.join(" · ")+"."+(s.skipped&&s.skipped.length?` Not applied, because only Piyush can move these on from his approval: ${s.skipped.join("; ")}.`:"")};
+  }catch(e){ s.busy=`Stopped after ${n} of ${total}. Check your connection and edit access, then choose the file again. Changes already saved won't be repeated.`; }
+  renderMain(true);
+}
+
+/* ---------- App → new Excel copy (master is only read, never written) ---------- */
+function setCell(ws,R,C,v,isUrl){
+  const addr=XLSX.utils.encode_cell({r:R,c:C});
+  if(v==null||v===""){ if(ws[addr]) ws[addr]={t:"s",v:""}; return; }
+  if(typeof v==="number") ws[addr]={t:"n",v};
+  else { ws[addr]={t:"s",v:String(v)}; if(isUrl&&/^https?:/i.test(v)) ws[addr].l={Target:String(v)}; }
+}
+const apprText = a => a?((a.rejected?"Rejected ":"Approved ")+(a.at?fmtWhen(a.at):"(before app)")):"";
+function patchSheet(kind,ws){
+  const range=XLSX.utils.decode_range(ws["!ref"]||"A1");
+  const rows=XLSX.utils.sheet_to_json(ws,{header:1,raw:false,defval:"",blankrows:true});
+  const parsed=parseImport(kind,rows);
+  if(parsed.error) return {error:parsed.error};
+  const {hi,cols}=parsed; let maxC=range.e.c, maxR=range.e.r; const added=[], fresh=new Set();
+  const H=range.s.r+hi;
+  let nextC=range.s.c+rows.reduce((m,r)=>{ for(let i=r.length-1;i>=0;i--) if(String(r[i]??"").trim()!=="") return Math.max(m,i); return m; },-1)+1;
+  const ensure=(key,header)=>{ if(cols[key]>=0) return; cols[key]=nextC-range.s.c; setCell(ws,H,nextC,header); maxC=Math.max(maxC,nextC); nextC++; added.push(header); fresh.add(key); };
+  ensure("avail","Availability (H/T/S)"); ensure("meas","Measurement"); ensure("notes","Notes");
+  ensure("ankita","Ankita approved"); ensure("piyush","Piyush approved"); ensure("appId","App ID");
+  const C=k=>range.s.c+cols[k];
+  const fields=SYNC_FIELDS[kind].filter(([f])=>cols[colKey(f)]>=0);
+  let cells=0; const changedRows=new Set(); const matched=new Set();
+  const writeRow=(R,r,d)=>{
+    for(const [f] of fields){
+      const ak=keyOf(f,recVal(kind,r,f)), ek=d?keyOf(f,d[f]):"";
+      if(d&&ak===ek) continue;
+      if(!d&&ak==="") continue;
+      setCell(ws,R,C(colKey(f)),cellVal(kind,f,r),f==="insta"); if(d&&!fresh.has(colKey(f))){ cells++; changedRows.add(r.id); }
+    }
+    setCell(ws,R,C("ankita"),apprText(r.approvals?.ankita)); setCell(ws,R,C("piyush"),apprText(r.approvals?.piyush)); setCell(ws,R,C("appId"),r.id);
+  };
+  for(const {d,id} of matchRows(kind,parsed.rows,S.sync[kind])){
+    const r=id&&id!=="__dup"&&rec(kind,id); if(!r) continue;
+    matched.add(r.id); writeRow(range.s.r+d.rowIdx,r,d);
+  }
+  const extra=recs(kind).filter(r=>!matched.has(r.id)).sort((a,b)=>(a.serial??9999)-(b.serial??9999)||String(a.name).localeCompare(b.name));
+  for(const r of extra){ maxR++; writeRow(maxR,r,null); }
+  ws["!ref"]=XLSX.utils.encode_range({s:range.s,e:{r:maxR,c:maxC}});
+  return {cells,rows:changedRows.size,added:extra.length,newCols:added};
+}
+function newInfluencerSheet(){
+  const head=["S No","Name","Source","Instagram","Type","Followers","Proposal","Remarks","Final Fee","Status","Availability (H/T/S)","Measurement","Notes","Ankita approved","Piyush approved","App ID"];
+  const body=recs("influencers").slice().sort((a,b)=>String(a.name).localeCompare(b.name)).map((r,i)=>[r.serial??i+1,r.name,r.source,cellVal("influencers","insta",r),cellVal("influencers","type",r),r.followers??"",r.proposal??"",r.nextAction||"",r.finalFee??"",cellVal("influencers","status",r),cellVal("influencers","avail",r),cellVal("influencers","measStatus",r),r.notes||"",apprText(r.approvals?.ankita),apprText(r.approvals?.piyush),r.id]);
+  return XLSX.utils.aoa_to_sheet([head,...body]);
+}
+function buildCopy(wb){
+  const out={sheets:[],error:""};
+  const ms=findSheet(wb,"models");
+  if(!ms){ out.error="Couldn't find a “Models 2026” tab in this file. Choose your master LFW workbook."; return out; }
+  const m=patchSheet("models",wb.Sheets[ms]); if(m.error){ out.error=m.error; return out; }
+  out.sheets.push(Object.assign({kind:"models",sheet:ms},m));
+  const is=findSheet(wb,"influencers");
+  if(is){ const r=patchSheet("influencers",wb.Sheets[is]); if(!r.error) out.sheets.push(Object.assign({kind:"influencers",sheet:is},r)); }
+  else if(recs("influencers").length){ XLSX.utils.book_append_sheet(wb,newInfluencerSheet(),"Influencers"); out.sheets.push({kind:"influencers",sheet:"Influencers",created:true,added:recs("influencers").length}); }
+  out.tabs=wb.SheetNames.length;
+  return out;
+}
+async function downloadCopy(){
+  const c=S.copy; if(!c||!c.wb) return;
+  const d=new Date(), pad=n=>String(n).padStart(2,"0");
+  const name=`LFW 2026 - app copy - ${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}${pad(d.getMinutes())}.xlsx`;
+  try{ const buf=XLSX.write(c.wb,{type:"array",bookType:"xlsx"}); await S.downloads.save({filename:name,data:new Blob([buf])}); c.saved=name; toast("Copy saved to your Downloads"); renderMain(true); }
+  catch(e){ if(e&&e.code!=="declined") toast("Couldn't save the copy: "+(e.message||e.code)); }
+}
+function readWorkbook(file,cb){
+  const rd=new FileReader();
+  rd.onload=()=>{ try{ cb(null,XLSX.read(new Uint8Array(rd.result),{type:"array",cellFormula:true})); }catch(e){ cb(e); } };
+  rd.onerror=()=>cb(rd.error||new Error("read failed"));
+  rd.readAsArrayBuffer(file);
+}
+
+/* ---------- Agency list import (adds new names, fills blanks; doesn't touch the sync snapshot) ---------- */
+const IMP_FIELDS={models:[["insta","Instagram"],["fee2025","2025 fee"],["proposal","Proposed fee"],["feeNote","Fee remark"],["counter","Counter-offer"],["finalFee","Final fee"],["nextAction","Next action"],["status","Status"]],
+  influencers:[["insta","Instagram"],["followers","Followers"],["type","Type"],["proposal","Proposed fee"],["finalFee","Final fee"],["nextAction","Next action"],["status","Status"]]};
+function buildPlan(){
+  const im=S.imp; im.plan=null; im.error="";
+  const parsed=parseImport(im.kind,sheetRows(im.wb,im.sheet));
+  if(parsed.error){ im.error=parsed.error; return; }
+  const kind=im.kind, existing=new Map(recs(kind).map(r=>[normKey(r.name)+"|"+normKey(r.source),r]));
+  const plan={cols:parsed.cols, add:[], fill:[], diff:[], same:0}, seen=new Set();
+  for(const d of parsed.rows){
+    const key=normKey(d.name)+"|"+normKey(d.source); if(seen.has(key)) continue; seen.add(key);
+    const ex=existing.get(key);
+    if(!ex){ const data=recordFromParsed(kind,d); data.origin="import"; plan.add.push({data}); continue; }
+    const fill={}, diffs=[];
+    for(const [k,label] of IMP_FIELDS[kind]){
+      const sv=d[k], av=ex[k];
+      const empty=v=>v==null||v==="";
+      if(empty(sv)) continue;
+      if(k==="status"){ if(sv!==av&&d.statusRaw) diffs.push({k,label,app:statusOf(kind,av).label,sheet:d.statusRaw,val:sv}); continue; }
+      if(empty(av)) fill[k]=sv;
+      else if(String(sv)!==String(av)) diffs.push({k,label,app:typeof av==="number"?inr(av):av,sheet:typeof sv==="number"?inr(sv):sv,val:sv});
+    }
+    if(Object.keys(fill).length) plan.fill.push({id:ex.id,name:ex.name,patch:fill});
+    if(diffs.length) plan.diff.push({id:ex.id,name:ex.name,fields:diffs,take:false});
+    if(!Object.keys(fill).length&&!diffs.length) plan.same++;
+  }
+  im.plan=plan;
+}
+async function applyImport(){
+  const im=S.imp, p=im.plan, kind=im.kind; if(!p) return;
+  let n=0; const total=p.add.length+p.fill.length+p.diff.filter(d=>d.take).length;
+  const tick=()=>{ im.busy=`Saving ${++n} of ${total}…`; renderMain(true); };
+  try{
+    for(const a of p.add){ const id=uniqueId(kind,a.data.name,a.data.source); await createRec(kind,id,a.data,"Added from import ("+im.sheet+")"); tick(); }
+    for(const f of p.fill){ await patchRec(kind,f.id,f.patch,"Filled from import: "+Object.keys(f.patch).join(", ")); tick(); }
+    for(const d of p.diff.filter(d=>d.take)){ const patch={}; d.fields.forEach(f=>patch[f.k]=f.val); await patchRec(kind,d.id,patch,"Updated from import: "+d.fields.map(f=>f.label).join(", ")); tick(); }
+    S.imp={done:`Import finished: ${p.add.length} added, ${p.fill.length} filled, ${p.diff.filter(d=>d.take).length} updated from the sheet.`};
+  }catch(e){ im.busy="Stopped after "+n+" of "+total+". Fix the problem and apply again; finished rows won't be duplicated."; }
+  renderMain(true);
+}
+async function exportXlsx(){
+  const wb=XLSX.utils.book_new();
+  const mk=kind=>recs(kind).slice().sort((a,b)=>(a.serial??9999)-(b.serial??9999)||String(a.name).localeCompare(b.name)).map((r,i)=>{
+    const o={"S No":r.serial??i+1,"Name":r.name,[kind==="models"?"Agency":"Source"]:r.source,"Instagram":r.insta||r.linkNote||"","Status":statusOf(kind,r.status).label,"Next action":r.nextAction||""};
+    if(kind==="models"){ o["2025 Fee"]=r.fee2025??""; }
+    else { o["Type"]=r.type==="attending"?"Attending":"Walking"; o["Followers"]=r.followers??""; }
+    Object.assign(o,{"Proposal":r.proposal??"","Fee remark":r.feeNote||"","Counter-offer":r.counter??"","Final Fee":r.finalFee??""});
+    o["Availability (H/T/S)"]=cellVal(kind,"avail",r); o["Measurement"]=cellVal(kind,"measStatus",r);
+    MEAS.forEach(([k,l])=>o[l]=r.meas?.[k]||"");
+    o["Alteration"]=r.alteration||""; o["Ankita approved"]=apprText(r.approvals?.ankita); o["Piyush approved"]=apprText(r.approvals?.piyush); o["Notes"]=r.notes||""; return o; });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(mk("models")),"Models");
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(mk("influencers").length?mk("influencers"):[{Name:""}]),"Influencers");
+  const buf=XLSX.write(wb,{type:"array",bookType:"xlsx"});
+  try{ await S.downloads.save({filename:`Tasva LFW app data ${new Date().toISOString().slice(0,10)}.xlsx`,data:new Blob([buf])}); toast("Excel file saved"); }
+  catch(e){ if(e&&e.code!=="declined") toast("Couldn't save the file: "+(e.message||e.code)); }
+}
+
+/* ---------- Excel sync screen ---------- */
+function syncInCard(){
+  const s=S.syncIn, last=k=>{ const x=S.sync[k]; return x?`${fmtWhen(x.at)} · ${esc(personName(x.by))} · ${esc(x.file||"Excel")}`:"not yet"; };
+  let body="";
+  if(s&&s.error) body=`<div class="banner">${esc(s.error)}</div>`;
+  else if(s&&s.done) body=`<div class="banner" style="background:var(--ok-soft);color:var(--ok)">${esc(s.done)}</div>`;
+  else if(s&&s.plans){
+    body=s.plans.map((p,pi)=>{
+      if(p.error) return `<div class="banner">${esc(p.sheet)}: ${esc(p.error)}</div>`;
+      const nUp=p.updates.reduce((a,u)=>a+u.items.length,0), nCon=p.conflicts.reduce((a,c)=>a+c.items.length,0);
+      return `<div class="stack"><div class="eyebrow">${esc(KINDS[p.kind].label)} · tab “${esc(p.sheet)}”</div>
+      ${p.firstTime?`<div class="banner">First sync for ${KINDS[p.kind].label.toLowerCase()}: empty app fields are filled from Excel, and any other difference is listed below for you to choose.</div>`:""}
+      <div class="grid g-tiles">
+        <div class="panel tile"><div class="eyebrow">From Excel</div><div class="v num">${nUp}</div><div class="s">changes in ${p.updates.length} people</div></div>
+        <div class="panel tile"><div class="eyebrow">Conflicts</div><div class="v num">${nCon}</div><div class="s">changed in both. You choose.</div></div>
+        <div class="panel tile"><div class="eyebrow">New</div><div class="v num">${p.add.length}</div><div class="s">rows only in Excel</div></div>
+        <div class="panel tile"><div class="eyebrow">Unchanged</div><div class="v num">${p.same}</div><div class="s">already match</div></div></div>
+      ${p.updates.length?`<details class="panel"><summary><b>${nUp} changes from Excel</b> <span class="muted">(applied automatically. App-only edits are kept.)</span></summary><div class="feed" style="margin-top:8px">${p.updates.map(u=>`<div class="fi" style="grid-template-columns:1fr"><div><b>${esc(u.name)}</b><div class="muted" style="font-size:13px">${u.items.map(i=>`${esc(i.label)}: ${esc(i.app)} → <b style="color:var(--ink)">${esc(i.xl)}</b>`).join(" · ")}</div></div></div>`).join("")}</div></details>`:""}
+      ${p.conflicts.length?`<div class="panel"><b>Changed in both the app and Excel</b><div class="muted" style="font-size:13px;margin-bottom:8px">The app value is kept unless you pick Excel.</div><div class="tablewrap"><table class="diff"><thead><tr><th>Name</th><th>Field</th><th>In app</th><th>In Excel</th><th>Keep</th></tr></thead><tbody>
+        ${p.conflicts.map((c,ci)=>c.items.map((it,ii)=>`<tr><td>${ii===0?esc(c.name):""}</td><td>${esc(it.label)}</td><td>${esc(it.app)}</td><td>${esc(it.xl)}</td><td><span class="seg" role="group" aria-label="Keep which value"><button data-action="sync-con" data-p="${pi}" data-c="${ci}" data-i="${ii}" data-v="0" aria-pressed="${!it.take}">App</button><button data-action="sync-con" data-p="${pi}" data-c="${ci}" data-i="${ii}" data-v="1" aria-pressed="${it.take}">Excel</button></span></td></tr>`).join("")).join("")}</tbody></table></div></div>`:""}
+      ${p.add.length?`<details class="panel"><summary><b>${p.add.length} new from Excel</b> <span class="muted">(will be added)</span></summary><p style="margin:8px 0 0">${p.add.map(a=>`${esc(a.d.name)} <span class="muted">(${esc(a.d.source)}, ${esc(statusOf(p.kind,a.d.status).label)})</span>`).join(" · ")}</p></details>`:""}
+      ${p.missing.length?`<div class="panel"><b>${p.missing.length} in the app but no longer in Excel</b><div class="muted" style="font-size:13px;margin-bottom:6px">Nothing is deleted. Tick anyone you want marked as Dropped.</div>${p.missing.map((m,mi)=>`<label class="check"><input type="checkbox" id="sm-${pi}-${mi}" data-change="sync-miss" data-p="${pi}" data-m="${mi}" ${m.drop?"checked":""}> ${esc(m.name)} <span class="muted">(${esc(m.source)})</span></label>`).join("")}</div>`:""}
+      ${p.dups.length?`<div class="banner">Listed twice in Excel, second copy ignored: ${p.dups.map(esc).join(", ")}</div>`:""}</div>`;
+    }).join("");
+    const n=s.plans.filter(p=>!p.error).reduce((a,p)=>a+syncChangeCount(p),0);
+    body+=`<div class="row"><button class="btn primary" data-action="sync-apply" ${n&&!s.busy?"":"disabled"}>${n?`Apply ${n} change${n===1?"":"s"} to the app`:"Nothing to apply"}</button><button class="btn ghost" data-action="sync-reset">Cancel</button>${s.busy?`<span class="muted">${esc(s.busy)}</span>`:""}</div>
+      ${n?"":`<p class="muted" style="margin:0;font-size:13px">The app already matches this file. Press Apply anyway to record it as the latest sync.</p><button class="btn sm" data-action="sync-apply">Record as synced</button>`}`;
+  }
+  return `<div class="panel stack"><div><div class="eyebrow">Excel → app</div><h3 style="font-family:var(--f-display);font-size:24px;font-weight:600">Update app from Excel</h3>
+      <p class="muted" style="margin:4px 0 0;font-size:13px">Last sync · Models: ${last("models")}${S.sync.influencers?` · Influencers: ${last("influencers")}`:""}</p></div>
+    <ol style="margin:0;padding-left:18px;font-size:14px"><li>Save your master Excel and close it.</li><li>Choose it below. The app reads <b>Models 2026</b> (and an <b>Influencers</b> tab if you add one).</li><li>Check the changes, then press Apply.</li></ol>
+    <label class="f">Master Excel file<input type="file" id="sync-file" accept=".xlsx,.xls" data-change="sync-file"></label>${body}</div>`;
+}
+function copyCard(){
+  const c=S.copy;
+  let body="";
+  if(c&&c.error) body=`<div class="banner">${esc(c.error)}</div>`;
+  else if(c&&c.summary){
+    body=`<div class="stack">${c.summary.sheets.map(x=>x.created?`<div>• <b>${esc(x.sheet)}</b>: new tab with ${x.added} ${KINDS[x.kind].label.toLowerCase()}</div>`:
+      `<div>• <b>${esc(x.sheet)}</b>: ${x.cells} cell${x.cells===1?"":"s"} updated in ${x.rows} row${x.rows===1?"":"s"}${x.added?`, ${x.added} new row${x.added===1?"":"s"} added at the bottom`:""}${x.newCols.length?`. New columns: ${x.newCols.map(esc).join(", ")}`:""}</div>`).join("")}
+      <div class="muted" style="font-size:13px">The copy has all ${c.summary.tabs} tabs. Their data and formulas are kept, but colours and cell formatting aren't. Your master file isn't changed.</div>
+      <div class="row"><button class="btn primary" data-action="copy-download">Download the copy</button><button class="btn ghost" data-action="copy-reset">Cancel</button></div>
+      ${c.saved?`<div class="banner" style="background:var(--ok-soft);color:var(--ok)">Saved as “${esc(c.saved)}” in your Downloads folder.</div>`:""}</div>`;
+  }
+  return `<div class="panel stack"><div><div class="eyebrow">App → Excel</div><h3 style="font-family:var(--f-display);font-size:24px;font-weight:600">Download updated Excel copy</h3>
+      <p class="muted" style="margin:4px 0 0;font-size:13px">Makes a <b>new file</b> from your master with the app's latest statuses, fees, availability and approvals. The master is only read, never changed.</p></div>
+    <ol style="margin:0;padding-left:18px;font-size:14px"><li>Choose your master Excel below.</li><li>Check what the copy will change.</li><li>Download. It's saved as a new file in Downloads.</li></ol>
+    <label class="f">Master Excel file<input type="file" id="copy-file" accept=".xlsx,.xls" data-change="copy-file"></label>${body}
+    <p class="muted" style="margin:0;font-size:13px">Just need the app's data on its own? <button class="btn sm ghost" data-action="export">Download app data</button></p></div>`;
+}
+function agencyImportHtml(){
+  const im=S.imp;
+  let step="";
+  if(im&&im.wb){
+    step+=`<div class="row" style="margin-top:12px"><label class="f">Sheet<select id="imp-sheet" data-change="imp-sheet">${im.wb.SheetNames.map(n=>`<option ${n===im.sheet?"selected":""}>${esc(n)}</option>`).join("")}</select></label>
+      <label class="f">Import into<select id="imp-kind" data-change="imp-kind"><option value="models" ${im.kind==="models"?"selected":""}>Models</option><option value="influencers" ${im.kind==="influencers"?"selected":""}>Influencers</option></select></label></div>`;
+    if(im.error) step+=`<div class="banner" style="margin-top:12px">${esc(im.error)}</div>`;
+    if(im.plan){
+      const p=im.plan;
+      step+=`<p style="margin:12px 0 0"><b>${p.add.length}</b> new · <b>${p.fill.length}</b> with blanks to fill · <b>${p.diff.length}</b> different · ${p.same} unchanged</p>
+        ${p.add.length?`<p class="muted" style="margin:6px 0 0;font-size:13px">New: ${p.add.map(a=>esc(a.data.name)).join(", ")}</p>`:""}
+        ${p.diff.length?`<div class="tablewrap" style="margin-top:10px"><table class="diff"><thead><tr><th>Use sheet</th><th>Name</th><th>Field</th><th>In app</th><th>In sheet</th></tr></thead><tbody>
+          ${p.diff.map((d,i)=>d.fields.map((f,j)=>`<tr>${j===0?`<td rowspan="${d.fields.length}"><input type="checkbox" id="impd-${i}" data-change="imp-diff" data-i="${i}" ${d.take?"checked":""} aria-label="Use sheet values for ${esc(d.name)}"></td><td rowspan="${d.fields.length}">${esc(d.name)}</td>`:""}<td>${esc(f.label)}</td><td>${esc(f.app)}</td><td>${esc(f.sheet)}</td></tr>`).join("")).join("")}
+        </tbody></table></div>`:""}
+        <div class="row" style="margin-top:12px"><button class="btn primary" data-action="imp-apply" ${p.add.length+p.fill.length+p.diff.filter(d=>d.take).length?"":"disabled"}>Apply import</button><button class="btn ghost" data-action="imp-reset">Cancel</button>${im.busy?`<span class="muted">${esc(im.busy)}</span>`:""}</div>`;
+    }
+  }
+  if(im&&im.error&&!im.wb) step+=`<div class="banner" style="margin-top:12px">${esc(im.error)}</div>`;
+  if(im&&im.done) step+=`<div class="banner" style="margin-top:12px;background:var(--ok-soft);color:var(--ok)">${esc(im.done)}</div>`;
+  return `<details class="panel" style="margin-top:16px" ${im?"open":""}><summary><b>Add a list from an agency</b> <span class="muted">(e.g. a new TSS or Apostrophe sheet. Adds new names and fills blanks; doesn't change your master sync)</span></summary>
+    <div style="margin-top:12px"><input type="file" id="imp-file" accept=".xlsx,.xls,.csv" data-change="imp-file" aria-label="Choose an agency list">${step}</div></details>`;
+}
+BODIES.import=()=>`<h2 class="sec">Excel sync</h2><p class="sub">Your master Excel stays the master. Only you edit it. Bring its changes into the app with one click, and take the app's changes out as a new copy.</p>
+  <div class="grid g-2">${syncInCard()}${copyCard()}</div>${agencyImportHtml()}`;
+
+/* ---------- Settings ---------- */
+BODIES.settings=()=>{
+  const c=S.config;
+  const stList=kind=>`<div class="panel"><h3 class="eyebrow" style="margin-bottom:8px">${KINDS[kind].label}: statuses</h3>
+    ${c.statuses[kind].map((s,i)=>{const used=recs(kind).filter(r=>r.status===s.id).length, sys=SYS.includes(s.id);return `<div class="st-row">
+      <span class="pill c-${s.color} sw">${used}</span>
+      <input type="text" id="stl-${kind}-${esc(s.id)}" value="${esc(s.label)}" data-change="st-label" data-kind="${kind}" data-i="${i}" aria-label="Status name">
+      <select id="stb-${kind}-${esc(s.id)}" class="sw" data-change="st-bucket" data-kind="${kind}" data-i="${i}" ${sys?"disabled title='Built into the approval flow'":""} aria-label="Stage">${BUCKETS.map(b=>`<option value="${b.id}" ${s.bucket===b.id?"selected":""}>${esc(b.label)}</option>`).join("")}</select>
+      <select id="stc-${kind}-${esc(s.id)}" class="sw" data-change="st-color" data-kind="${kind}" data-i="${i}" aria-label="Colour">${COLORS.map(x=>`<option ${s.color===x?"selected":""}>${x}</option>`).join("")}</select>
+      <span class="mv"><button class="btn sm ghost" data-action="st-move" data-kind="${kind}" data-i="${i}" data-d="-1" aria-label="Move up" ${i===0?"disabled":""}>↑</button><button class="btn sm ghost" data-action="st-move" data-kind="${kind}" data-i="${i}" data-d="1" aria-label="Move down" ${i===c.statuses[kind].length-1?"disabled":""}>↓</button><button class="btn sm ghost" data-action="st-del" data-kind="${kind}" data-i="${i}" aria-label="Delete status" ${sys||used?"disabled":""} title="${sys?"Built into the approval flow":used?"In use by "+used+" people":"Delete"}">✕</button></span></div>`}).join("")}
+    <div class="row" style="margin-top:10px"><input type="text" id="stnew-${kind}" placeholder="New status, e.g. Look test scheduled" style="flex:1 1 200px"><select id="stnewb-${kind}" aria-label="Stage for new status">${BUCKETS.map(b=>`<option value="${b.id}">${esc(b.label)}</option>`).join("")}</select><button class="btn sm primary" data-action="st-add" data-kind="${kind}">Add status</button></div></div>`;
+  const chipEd=(kind,what,title,items,usedFn)=>`<div class="panel"><h3 class="eyebrow" style="margin-bottom:8px">${title}</h3><div class="chipset">${items.map((m,i)=>{const lbl=what==="markers"?m.label:m;const used=usedFn(m);return `<span class="chip">${esc(lbl)}<button class="btn sm ghost" style="padding:0 4px" data-action="chip-del" data-what="${what}" data-kind="${kind}" data-i="${i}" ${used?`disabled title="In use by ${used}"`:""} aria-label="Remove ${esc(lbl)}">✕</button></span>`}).join("")}</div>
+    <div class="row" style="margin-top:10px"><input type="text" id="new-${what}-${kind}" placeholder="Add ${what==="markers"?"a marker":"a source"}" style="flex:1 1 200px"><button class="btn sm" data-action="chip-add" data-what="${what}" data-kind="${kind}">Add</button></div></div>`;
+  const people=`<div class="panel"><h3 class="eyebrow" style="margin-bottom:10px">People & access</h3>
+      <div class="stack" style="gap:10px;font-size:14px">
+        <div><b>Ankita</b> · full access <span class="muted">(${esc(S.roles?.ankita||"")})</span></div>
+        <label class="f">Piyush's Google email (final approvals; can edit models and influencers)<input type="text" id="role-piyush" value="${esc(S.roles?.piyush||"")}" placeholder="name@gmail.com" autocomplete="off"></label>
+        <div class="row"><button class="btn sm primary" data-action="save-roles">Save access</button><span class="muted" style="font-size:13px">Everyone else who opens the link can view but not change anything.</span></div>
+      </div></div>
+    <div class="panel"><h3 class="eyebrow" style="margin-bottom:10px">Restore from backup</h3>
+      <p style="margin:0 0 10px;font-size:14px">Loads a <b>backup.json</b> file into the database. Use it once to bring over the data from the claude.ai version. Records with the same name are overwritten.</p>
+      <input type="file" id="restore-file" accept=".json,application/json" data-change="restore-file" aria-label="Choose backup file">
+      ${S.restore?`<p class="muted" style="margin:8px 0 0;font-size:13px">${esc(S.restore)}</p>`:""}</div>`;
+  return `<h2 class="sec">Settings</h2><p class="sub">Change the workflow without a rebuild. Built-in statuses (New, Approval pending Piyush, Waiting on agency, Confirmed, Dropped) can be renamed but not deleted, because the approval flow uses them.</p>
+    <div class="grid g-2">
+      <div class="panel"><h3 class="eyebrow" style="margin-bottom:10px">Key dates & targets</h3><div class="fgrid">
+        <label class="f">Head office fitting (H)<input type="date" id="d-ho" value="${esc(c.dates.ho)}" data-change="cfg" data-path="dates.ho"></label>
+        <label class="f">Taj fitting (T)<input type="date" id="d-taj" value="${esc(c.dates.taj)}" data-change="cfg" data-path="dates.taj"></label>
+        <label class="f">Show (S), date & time<input type="datetime-local" id="d-show" value="${esc(c.dates.show)}" data-change="cfg" data-path="dates.show"></label>
+        <label class="f">Models needed<input type="number" id="t-models" value="${c.targets.models}" data-change="cfg" data-path="targets.models" data-num="1"></label>
+        <label class="f">Influencer reach goal<input type="text" id="t-reach" value="${fmtF(c.targets.reach)}" data-change="cfg" data-path="targets.reach" data-num="1"></label>
+        <label class="f">Flag fee hikes above (%)<input type="number" id="t-hike" value="${c.hikePct}" data-change="cfg" data-path="hikePct" data-num="1"></label>
+      </div></div>
+      ${chipEd("models","sources","Model agencies",c.sources.models,s=>S.models.filter(r=>r.source===s).length)}
+    </div>
+    <div class="grid g-2" style="margin-top:16px">${people}</div>
+    <div class="grid g-2" style="margin-top:16px">${stList("models")}${stList("influencers")}</div>
+    <div class="grid g-2" style="margin-top:16px">
+      ${chipEd("models","markers","Model markers",c.markers.models,m=>S.models.filter(r=>(r.markers||[]).includes(m.id)).length)}
+      ${chipEd("influencers","markers","Influencer markers",c.markers.influencers,m=>S.influencers.filter(r=>(r.markers||[]).includes(m.id)).length)}
+      ${chipEd("influencers","sources","Influencer sources",c.sources.influencers,s=>S.influencers.filter(r=>r.source===s).length)}
+    </div>`;
+};
+
+/* ---------- Drawer ---------- */
+function openDrawer(kind,id){ S.drawer={kind,id}; S.confirmDelete=false; renderDrawer(true); }
+function closeDrawer(){ S.drawer=null; $("#drawer-root").innerHTML=""; }
+function renderDrawer(force){
+  const root=$("#drawer-root");
+  if(!S.drawer){ root.innerHTML=""; return; }
+  if(!force&&focusInside(root)){ S.dirty=true; return; }
+  const {kind,id}=S.drawer, r=rec(kind,id);
+  if(!r){ root.innerHTML=""; S.drawer=null; return; }
+  const scroll=$(".db",root)?.scrollTop||0;
+  const isI=kind==="influencers", ef=effFee(r), s=statusOf(kind,r.status), c=S.config;
+  const nameOf=by=>by?personName(by):"";
+  const trail=["ankita","piyush"].map(k=>{const a=r.approvals?.[k];const who=k==="ankita"?"Ankita's review":"Piyush's approval";
+    if(!a) return `<div>${who}: <span class="muted">pending</span></div>`;
+    const by=a.via==="excel"?"from the Excel sheet":nameOf(a.by)?`by ${esc(nameOf(a.by))}`:"";
+    return `<div>${who}: <b>${a.rejected?"Rejected":"Approved"}</b> ${by} ${a.at?"· "+fmtWhen(a.at):""}</div>`;}).join("");
+  const acts=S.activity.filter(a=>a.recId===id&&a.kind===kind).slice(0,25);
+  const fld=(path,label,val,type="text",ph="")=>`<label class="f">${label}<input type="text" ${type==="num"?'inputmode="numeric"':""} id="dr-${path.replace(/\./g,"-")}" value="${esc(val??"")}" placeholder="${esc(ph)}" data-change="field" data-path="${path}" data-type="${type}" data-label="${esc(label)}"></label>`;
+  root.innerHTML=`<div class="scrim" data-action="close"></div><aside class="drawer" role="dialog" aria-label="${esc(r.name)}">
+    <div class="dh">${avatar(r)}<div style="flex:1;min-width:0"><h3>${esc(r.name)}</h3>
+      <div class="muted" style="font-size:13px">${esc(r.source)} · ${isI?(r.type==="attending"?"Attending influencer":"Walking influencer"):"Model"}${r.serial!=null?` · Sheet #${r.serial}`:""}</div>
+      <div class="row" style="margin-top:6px">${r.insta?`<a class="btn sm" href="${esc(r.insta)}" target="_blank" rel="noopener">Open Instagram ↗</a>`:`<span class="pill nodot c-slate">${r.linkNote==="TBD"?"Instagram TBD":"No Instagram yet"}</span>`}
+      ${S.assets?`<label class="btn sm" for="photo-in">${r.photo?"Change photo":"Add photo"}</label><input type="file" id="photo-in" accept="image/*" data-change="photo" hidden>`:""}</div></div>
+      <button class="btn ghost" data-action="close" aria-label="Close">✕</button></div>
+    <div class="db">
+      <section class="dsec"><h4>Status & approvals</h4>
+        <div class="row">${statusSelect(kind,r)}
+        ${canApprove(r)?`<button class="btn sm ok" data-action="approve" data-kind="${kind}" data-id="${esc(id)}">${r.status==="new"?"Approve → send to Piyush":"Approve → book with agency"}</button>`:(whoseTurn(r)?`<span class="waiting-note">${whoseTurn(r)}</span>`:"")}
+        ${canReject(r)?`<button class="btn sm danger" data-action="reject" data-kind="${kind}" data-id="${esc(id)}">Reject</button>`:""}</div>
+        <div class="trail">${trail}${r.dropReason?`<div>Reason: ${esc(r.dropReason)}</div>`:""}</div>
+        ${fld("nextAction","Next action",r.nextAction,"text","e.g. Call for measurements")}
+        <div><div class="eyebrow" style="margin-bottom:6px">Markers</div><div class="chipset">${c.markers[kind].map(m=>`<button class="chip" data-action="marker" data-m="${esc(m.id)}" aria-pressed="${(r.markers||[]).includes(m.id)}">${esc(m.label)}</button>`).join("")}</div></div>
+      </section>
+      <section class="dsec"><h4>Details</h4><div class="fgrid">
+        ${fld("name","Name",r.name)}
+        <label class="f">${isI?"Source":"Agency"}<select id="dr-source" data-change="field" data-path="source" data-label="Agency">${[...new Set([...c.sources[kind],r.source])].filter(Boolean).map(x=>`<option ${x===r.source?"selected":""}>${esc(x)}</option>`).join("")}</select></label>
+        ${fld("insta","Instagram URL",r.insta,"text","https://instagram.com/…")}
+        ${isI?`${fld("followers","Followers",r.followers?fmtF(r.followers):"","num","e.g. 1.2m")}<label class="f">Type<select id="dr-type" data-change="field" data-path="type" data-label="Type"><option value="walking" ${r.type!=="attending"?"selected":""}>Walking</option><option value="attending" ${r.type==="attending"?"selected":""}>Attending</option></select></label>`:""}
+      </div></section>
+      <section class="dsec"><h4>Fees</h4><div class="fgrid">
+        ${isI?"":fld("fee2025","2025 fee",r.fee2025,"num")}
+        ${fld("proposal","Proposed",r.proposal,"num")}${fld("counter","Our counter",r.counter,"num")}${fld("finalFee","Final fee",r.finalFee,"num")}
+      </div>${fld("feeNote","Fee remark",r.feeNote,"text","OK / TBC / notes")}
+        <div class="muted num" style="font-size:13px">Effective fee <b style="color:var(--ink)">${inr(ef)}</b>${r.fee2025&&ef?` · ${ef>=r.fee2025?"+":""}${Math.round((ef/r.fee2025-1)*100)}% vs 2025`:""}</div></section>
+      <section class="dsec"><h4>Availability confirmed for</h4>${availKeys().map(([k,sh,l,dt])=>`<label class="check avrow" style="justify-content:flex-start"><input type="checkbox" id="dr-av-${k}" data-change="dr-avail" data-k="${k}" ${isAv(r,k)?"checked":""}><span><b>${sh}</b> · ${esc(l)} <small>${fmtDate(dt,{weekday:"short",day:"numeric",month:"short"})}</small></span></label>`).join("")}</section>
+      <section class="dsec"><h4>Measurements & alteration</h4>
+        <div class="avrow"><span>Measurement</span><span class="seg" role="group" aria-label="Measurement">${[["done","Done"],["not_done","Not done"]].map(([v,l])=>`<button data-action="meas-set" data-v="${v}" aria-pressed="${(measDone(r)?"done":"not_done")===v}">${l}</button>`).join("")}</span></div>
+        <div class="fgrid">${MEAS.map(([k,l])=>fld("meas."+k,l,r.meas?.[k],"text",k==="shoe"?"UK size":"inches")).join("")}</div>
+        ${fld("meas.notes","Fit notes",r.meas?.notes)}
+        <div class="avrow"><span>Garment alteration</span><span class="seg" role="group" aria-label="Alteration">${ALTER.map(a=>`<button data-action="alter" data-v="${a}" aria-pressed="${(r.alteration||"Not started")===a}">${a}</button>`).join("")}</span></div></section>
+      <section class="dsec"><h4>Notes</h4><textarea id="dr-notes" rows="3" data-change="field" data-path="notes" data-label="Notes" aria-label="Notes">${esc(r.notes||"")}</textarea></section>
+      <section class="dsec"><h4>History</h4><div class="log">${acts.length?acts.map(a=>`<div><time>${fmtWhen(a.at)}</time><span>${esc(a.text)}${a.by?` <span class="muted">· ${esc(nameOf(a.by))}</span>`:""}</span></div>`).join(""):`<span class="muted">No changes recorded in the app yet.</span>`}</div></section>
+      ${can("delete")?`<section class="row">${S.confirmDelete?`<span>Delete ${esc(r.name)} for everyone?</span><button class="btn sm danger" data-action="del-yes">Delete</button><button class="btn sm" data-action="del-no">Keep</button>`:`<button class="btn sm ghost danger" data-action="del-ask">Delete this record</button>`}</section>`:""}
+    </div></aside>`;
+  if(!can("edit")){ const dr=$(".drawer",root); dr.classList.add("ro");
+    dr.querySelectorAll("input,select,textarea").forEach(e=>{ e.disabled=true; });
+    dr.querySelectorAll('[data-action="marker"],[data-action="avail"],[data-action="alter"],[data-action="meas-set"],label[for="photo-in"]').forEach(e=>{ e.disabled=true; e.style.pointerEvents="none"; }); }
+  const b=$(".db",root); if(b&&!force) b.scrollTop=scroll;
+}
+
+/* ---------- Events ---------- */
+const A={};
+A["dash-go"]=el=>{ const a=S._acts[+el.dataset.i]; if(!a) return; if(a.go[1]) Object.assign(S.f.models,{q:"",source:"all",bucket:"all",status:"all",flag:"all"},a.go[1]); go(a.go[0]); };
+A["dash-src"]=el=>{ Object.assign(S.f.models,{q:"",source:el.dataset.src,bucket:"all",status:"all",flag:"all"}); go("models"); };
+A.open=el=>openDrawer(el.dataset.kind,el.dataset.id);
+A.close=()=>closeDrawer();
+A.view=el=>{ S.f[el.dataset.kind].view=el.dataset.v; renderMain(true); };
+A["clear-filters"]=el=>{ Object.assign(S.f[el.dataset.kind],{q:"",source:"all",bucket:"all",status:"all",flag:"all",type:"all"}); renderMain(true); };
+A["add-open"]=el=>{ modalDone=null; openModal(addModalHtml(el.dataset.kind)); };
+A["add-save"]=el=>saveNew(el.dataset.kind,el);
+A["modal-yes"]=()=>closeModal(true);
+A["modal-no"]=()=>closeModal(false);
+A["modal-scrim"]=(el,e)=>{ if(e.target===el) closeModal(false); };
+A["dash-detail"]=el=>{ const i=+el.dataset.i; S.dashOpen=S.dashOpen===i?null:i; renderMain(false); };
+A["feed-toggle"]=()=>{ S.feedAll=!S.feedAll; renderMain(false); };
+A["avail-open"]=el=>{ if(popFor&&popFor.id===el.dataset.id){ closePop(); return; } openAvailPop(el,el.dataset.kind,el.dataset.id); };
+A["meas-set"]=async el=>{ const {kind,id}=S.drawer; await patchRec(kind,id,{measStatus:el.dataset.v},"Measurement: "+(el.dataset.v==="done"?"done":"not done")).catch(()=>{}); };
+A.approve=async el=>{ try{ await askApprove(el.dataset.kind,el.dataset.id); }catch(e){} };
+A.reject=async el=>{ const k=el.dataset.key; const reason=k?(($("#rr-"+CSS.escape(k))||{}).value||"").trim():""; try{ await askReject(el.dataset.kind,el.dataset.id,reason); }catch(e){} };
+A["sel-clear"]=el=>{ S.sel[el.dataset.kind].clear(); renderMain(false); };
+A["bulk-status"]=async el=>{ const kind=el.dataset.kind, v=$("#bulk-"+kind).value; if(!v) return toast("Pick a status first");
+  const ids=[...S.sel[kind]].filter(id=>{const r=rec(kind,id);return r&&canSetStatus(r.status,v);}); el.disabled=true; for(const id of ids){ const r=rec(kind,id); if(r&&r.status!==v) await patchRec(kind,id,{status:v},`Status: ${statusOf(kind,r.status).label} → ${statusOf(kind,v).label}`).catch(()=>{}); }
+  S.sel[kind].clear(); toast(`Updated ${ids.length}`); renderMain(false); };
+A["bulk-approve"]=async el=>{ const kind=el.dataset.kind; const items=[...S.sel[kind]].filter(id=>{const r=rec(kind,id);return r&&canApprove(r)}).map(id=>[kind,id]);
+  if(await askBulkApprove(items)){ S.sel[kind].clear(); renderMain(false); } };
+A["appr-selall"]=el=>{ const st=el.dataset.stage==="ankita"?"new":"pending_piyush"; const keys=[...S.models.filter(r=>r.status===st&&canApprove(r)).map(r=>"models|"+r.id),...S.influencers.filter(r=>r.status===st&&canApprove(r)).map(r=>"influencers|"+r.id)];
+  const all=keys.every(k=>S.sel.approvals.has(k)); keys.forEach(k=>all?S.sel.approvals.delete(k):S.sel.approvals.add(k)); renderMain(false); };
+A["appr-bulk"]=async el=>{ const st=el.dataset.stage==="ankita"?"new":"pending_piyush"; const keys=[...S.sel.approvals].filter(k=>{const [kind,id]=k.split("|");const r=rec(kind,id);return r&&r.status===st&&canApprove(r)});
+  if(await askBulkApprove(keys.map(k=>k.split("|")))){ keys.forEach(k=>S.sel.approvals.delete(k)); renderMain(false); } };
+A["desk-src"]=el=>{ S.desk.source=el.dataset.src; renderMain(false); };
+A["copy-msg"]=el=>{ const t=$("#deskmsg"); const txt=t.value; navigator.clipboard.writeText(txt).then(()=>toast("Message copied"),()=>{ t.focus(); t.select(); toast("Press Ctrl/Cmd + C to copy"); }); };
+A["imp-apply"]=el=>{ el.disabled=true; applyImport(); };
+A["sync-con"]=el=>{ S.syncIn.plans[+el.dataset.p].conflicts[+el.dataset.c].items[+el.dataset.i].take=el.dataset.v==="1"; renderMain(true); };
+A["sync-apply"]=el=>{ el.disabled=true; applySync(); };
+A["sync-reset"]=()=>{ S.syncIn=null; renderMain(true); };
+A["copy-download"]=()=>downloadCopy();
+A["copy-reset"]=()=>{ S.copy=null; renderMain(true); };
+A["imp-reset"]=()=>{ S.imp=null; renderMain(true); };
+A.export=()=>exportXlsx();
+A.marker=async el=>{ const {kind,id}=S.drawer, r=rec(kind,id), m=el.dataset.m; const has=(r.markers||[]).includes(m);
+  const lbl=(S.config.markers[kind].find(x=>x.id===m)||{label:m}).label;
+  await patchRec(kind,id,{markers:has?r.markers.filter(x=>x!==m):[...(r.markers||[]),m]},(has?"Removed marker: ":"Marked: ")+lbl).catch(()=>{}); };
+A.alter=async el=>{ const {kind,id}=S.drawer; await patchRec(kind,id,{alteration:el.dataset.v},"Alteration: "+el.dataset.v).catch(()=>{}); };
+A["del-ask"]=()=>{ S.confirmDelete=true; renderDrawer(true); };
+A["del-no"]=()=>{ S.confirmDelete=false; renderDrawer(true); };
+A["del-yes"]=async()=>{ const {kind,id}=S.drawer, r=rec(kind,id); try{ await queue(KINDS[kind].coll+"/"+id,()=>S.db.collection(KINDS[kind].coll).doc(id).delete()); logAct(kind,id,r?.name,"Deleted"); closeDrawer(); toast("Deleted"); }catch(e){ dbErr(e); } };
+A["st-move"]=el=>{ const l=S.config.statuses[el.dataset.kind], i=+el.dataset.i, j=i+ +el.dataset.d; if(j<0||j>=l.length) return; [l[i],l[j]]=[l[j],l[i]]; saveConfig(); renderMain(false); };
+A["st-del"]=el=>{ S.config.statuses[el.dataset.kind].splice(+el.dataset.i,1); saveConfig(); renderMain(false); };
+A["st-add"]=el=>{ const kind=el.dataset.kind, inp=$("#stnew-"+kind), label=inp.value.trim(); if(!label) return toast("Type a status name first");
+  const b=$("#stnewb-"+kind).value; let id=slug(label).replace(/-/g,"_"), n=2; while(S.config.statuses[kind].some(s=>s.id===id)) id=slug(label).replace(/-/g,"_")+"_"+(n++);
+  S.config.statuses[kind].push({id,label,bucket:b,color:(BUCKETS.find(x=>x.id===b)||{}).color||"slate"}); saveConfig(); renderMain(false); toast("Status added"); };
+A["chip-add"]=el=>{ const {what,kind}=el.dataset, inp=$(`#new-${what}-${kind}`), v=inp.value.trim(); if(!v) return;
+  const l=S.config[what][kind];
+  if(what==="markers"){ let id=slug(v).replace(/-/g,"_"); if(l.some(m=>m.id===id)) id+="_"+l.length; l.push({id,label:v}); } else { if(l.some(x=>normKey(x)===normKey(v))) return toast("Already in the list"); l.push(v); }
+  saveConfig(); renderMain(false); };
+A["chip-del"]=el=>{ S.config[el.dataset.what][el.dataset.kind].splice(+el.dataset.i,1); saveConfig(); renderMain(false); };
+
+A["sign-in"]=async()=>{ try{ await S.auth.signIn(); }catch(e){ toast("Sign-in didn't work: "+(e.code||e.message)); } };
+A["sign-out"]=async()=>{ await S.auth.signOut(); toast("Signed out. You're in view-only mode."); };
+A["filters-toggle"]=el=>{ const f=S.f[el.dataset.kind]; f.open=!f.open; const box=$("#filters-"+el.dataset.kind); box&&box.classList.toggle("open",f.open); el.setAttribute("aria-expanded",f.open); };
+A["save-roles"]=async()=>{ const v=($("#role-piyush").value||"").trim().toLowerCase();
+  if(v&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return toast("That doesn't look like an email address.");
+  try{ const next=Object.assign({},S.roles||{},{ankita:S.authUser.email,piyush:v}); await S.db.doc("roles/main").set(next); S.roles=next; toast(v?"Saved. Piyush can now sign in with "+v:"Saved. Piyush's access removed."); renderMain(true); }catch(e){ dbErr(e); } };
+const C={};
+C["restore-file"]=el=>{ const f=el.files&&el.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=async()=>{ let b; try{ b=JSON.parse(rd.result); }catch(e){ return toast("That file isn't a valid backup."); }
+    const items=[]; for(const coll of ["models","influencers","config","sync","activity"]) for(const [id,data] of Object.entries(b[coll]||{})) items.push([coll+"/"+id,data]);
+    if(!items.length) return toast("The backup is empty.");
+    const ok=await confirmBox({title:"Restore backup?",body:`<p style="margin:0">This writes <b>${items.length}</b> records (${["models","influencers","config","sync","activity"].map(c=>Object.keys(b[c]||{}).length+" "+c).join(", ")}) into the database. Records with the same name are overwritten.</p>`,ok:"Restore",okClass:"primary"});
+    if(!ok) return;
+    try{ S.restore="Restoring…"; renderMain(true); await S.db.batchSet(items,n=>{ S.restore=`Saved ${n} of ${items.length}…`; renderMain(true); });
+      S.restore=`Done. ${items.length} records restored.`; toast("Backup restored"); }
+    catch(e){ S.restore="Stopped: "+(e.code||e.message)+". Make sure you're signed in as Ankita and the rules are published."; }
+    renderMain(true); };
+  rd.readAsText(f); };
+C.filter=el=>{ S.f[el.dataset.kind][el.dataset.key]=el.value; if(el.dataset.key==="bucket"&&el.value!=="all") S.f[el.dataset.kind].status="all"; renderMain(true); };
+C.status=async el=>{ const kind=el.dataset.kind, id=el.dataset.id, r=rec(kind,id), v=el.value; if(!r||r.status===v) return;
+  if(!canSetStatus(r.status,v)){ el.value=r.status; return toast(v==="pending_piyush"||r.status==="new"?"Only Ankita can make this change.":"Only Piyush can move this on from his approval."); }
+  await patchRec(kind,id,{status:v},`Status: ${statusOf(kind,r.status).label} → ${statusOf(kind,v).label}`).catch(()=>{ el.value=r.status; }); };
+C.meas=async el=>{ const kind=el.dataset.kind,id=el.dataset.id,r=rec(kind,id),v=el.value; if(!r) return;
+  await patchRec(kind,id,{measStatus:v},"Measurement: "+(v==="done"?"done":"not done")).catch(()=>{ el.value=measDone(r)?"done":"not_done"; }); };
+async function setAvail(kind,id,k,on){ const l=(availKeys().find(x=>x[0]===k)||[])[2];
+  await patchRec(kind,id,{avail:{[k]:on?"yes":"pending"}},`${l}: ${on?"confirmed":"not confirmed"}`).catch(()=>{}); }
+C["avail-chk"]=el=>{ if(popFor) setAvail(popFor.kind,popFor.id,el.dataset.k,el.checked); };
+C["dr-avail"]=el=>{ const {kind,id}=S.drawer; setAvail(kind,id,el.dataset.k,el.checked); };
+C.sel=el=>{ const s=S.sel[el.dataset.kind]; el.checked?s.add(el.dataset.id):s.delete(el.dataset.id); renderMain(false); };
+C.selall=el=>{ const kind=el.dataset.kind, s=S.sel[kind]; filtered(kind).forEach(r=>el.checked?s.add(r.id):s.delete(r.id)); renderMain(false); };
+C["appr-sel"]=el=>{ el.checked?S.sel.approvals.add(el.dataset.key):S.sel.approvals.delete(el.dataset.key); renderMain(false); };
+C["desk-sec"]=el=>{ S.desk.sec[el.dataset.k]=el.checked; renderMain(false); };
+C.field=async el=>{
+  const {kind,id}=S.drawer, r=rec(kind,id); if(!r) return;
+  const path=el.dataset.path, type=el.dataset.type; let v=el.value.trim();
+  if(type==="num"){ if(v===""){ v=null; } else { const n=parseNum(v); if(n==null) return toast(`"${v}" isn't a number. Try 18000 or 18k.`); v=n; } }
+  if(path==="insta"&&v&&!/^https?:\/\//i.test(v)) v=v.startsWith("@")?"https://www.instagram.com/"+v.slice(1):"https://"+v;
+  if(path==="name"&&!v) return toast("Name can't be empty");
+  const parts=path.split("."), cur=parts.reduce((o,k)=>o==null?o:o[k],r);
+  if((cur??null)===(v??null)||String(cur??"")===String(v??"")) return;
+  const patch={}; let o=patch; parts.forEach((k,i)=>{ if(i===parts.length-1) o[k]=v; else o=o[k]={}; });
+  if(path==="insta"&&v) patch.linkNote="";
+  if(path.startsWith("meas.")&&path!=="meas.notes"&&v&&!measDone(r)) patch.measStatus="done";
+  const show=type==="num"&&v!=null?(path==="followers"?fmtF(v):inr(v)):(v==null||v===""?"cleared":`"${String(v).slice(0,60)}"`);
+  await patchRec(kind,id,patch,`${el.dataset.label}: ${show}`).catch(()=>{});
+};
+C.photo=async el=>{ const f=el.files&&el.files[0]; if(!f||!S.assets) return; const {kind,id}=S.drawer;
+  try{ toast("Uploading photo…"); const a=await S.assets.upload(f); await patchRec(kind,id,{photo:a.id},"Photo updated"); toast("Photo saved"); }
+  catch(e){ toast("Couldn't upload the photo: "+(e.message||e.code||"unknown error")); } };
+C.cfg=el=>{ const parts=el.dataset.path.split("."); let v=el.value; if(el.dataset.num){ v=parseNum(v); if(v==null) return toast("Enter a number"); }
+  let o=S.config; parts.slice(0,-1).forEach(k=>o=o[k]); o[parts.at(-1)]=v; saveConfig(); renderCountdown(); };
+C["st-label"]=el=>{ const v=el.value.trim(); if(!v) return; S.config.statuses[el.dataset.kind][+el.dataset.i].label=v; saveConfig(); };
+C["st-bucket"]=el=>{ S.config.statuses[el.dataset.kind][+el.dataset.i].bucket=el.value; saveConfig(); };
+C["st-color"]=el=>{ S.config.statuses[el.dataset.kind][+el.dataset.i].color=el.value; saveConfig(); renderMain(false); };
+C["imp-file"]=el=>{ const f=el.files&&el.files[0]; if(!f) return;
+  readWorkbook(f,(err,wb)=>{ if(err){ S.imp={error:"Couldn't read that file. Save it as .xlsx or .csv and try again."}; return renderMain(true); }
+    const sheet=wb.SheetNames.find(n=>/models\s*2026/i.test(n))||wb.SheetNames[0];
+    S.imp={wb,sheet,kind:/influenc/i.test(sheet)?"influencers":"models",file:f.name}; buildPlan(); renderMain(true); }); };
+C["sync-file"]=el=>{ const f=el.files&&el.files[0]; if(!f) return;
+  readWorkbook(f,(err,wb)=>{
+    if(err){ S.syncIn={error:"Couldn't read that file. Make sure it's the .xlsx master and that it's closed in Excel, then try again."}; return renderMain(true); }
+    const plans=[]; for(const kind of ["models","influencers"]){ const sh=findSheet(wb,kind); if(sh) plans.push(buildSyncPlan(kind,wb,sh,f.name)); }
+    S.syncIn=plans.length?{file:f.name,plans}:{error:"This file has no “Models 2026” or “Influencers” tab. Choose your master LFW workbook."};
+    renderMain(true); }); };
+C["sync-miss"]=el=>{ S.syncIn.plans[+el.dataset.p].missing[+el.dataset.m].drop=el.checked; renderMain(true); };
+C["copy-file"]=el=>{ const f=el.files&&el.files[0]; if(!f) return;
+  readWorkbook(f,(err,wb)=>{
+    if(err){ S.copy={error:"Couldn't read that file. Make sure it's the .xlsx master, then try again."}; return renderMain(true); }
+    const summary=buildCopy(wb); S.copy=summary.error?{error:summary.error}:{file:f.name,wb,summary}; renderMain(true); }); };
+C["imp-sheet"]=el=>{ S.imp.sheet=el.value; if(/influenc/i.test(el.value)) S.imp.kind="influencers"; buildPlan(); renderMain(true); };
+C["imp-kind"]=el=>{ S.imp.kind=el.value; buildPlan(); renderMain(true); };
+C["imp-diff"]=el=>{ S.imp.plan.diff[+el.dataset.i].take=el.checked; renderMain(true); };
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("#tabs [data-tab]"); if(t){ go(t.dataset.tab); return; }
+  const a=e.target.closest("[data-action]"); if(a&&A[a.dataset.action]&&!a.disabled){ if(a.tagName==="A") return; if(a.dataset.action!=="modal-scrim") e.preventDefault(); A[a.dataset.action](a,e); }
+});
+document.addEventListener("change",e=>{ const el=e.target.closest("[data-change]"); if(el&&C[el.dataset.change]) C[el.dataset.change](el,e); });
+let qT; document.addEventListener("input",e=>{ const el=e.target; if(el.dataset&&el.dataset.input==="q"){ S.f[el.dataset.kind].q=el.value; clearTimeout(qT); qT=setTimeout(()=>{ const b=$("#body"); if(b){ b.innerHTML=BODIES[S.tab](); } },120); } });
+document.addEventListener("keydown",e=>{ if(e.key!=="Escape") return; if(popFor) return closePop(); if($("#modal-root").innerHTML) return closeModal(false); if(S.drawer) closeDrawer(); });
+document.addEventListener("pointerdown",e=>{ if(popFor&&!e.target.closest("#pop")&&!e.target.closest('[data-action="avail-open"]')) closePop(); });
+window.addEventListener("scroll",e=>{ if(popFor&&!(e.target&&e.target.closest&&e.target.closest("#pop"))) closePop(); },true);
+window.addEventListener("resize",()=>{ if(popFor) closePop(); });
+/* ---------- Boot ---------- */
+function mergeConfig(stored){
+  const c=clone(DEFAULT_CONFIG);
+  if(!stored) return c;
+  for(const k of Object.keys(c)){ if(stored[k]==null) continue;
+    if(typeof c[k]==="object"&&!Array.isArray(c[k])) for(const j of Object.keys(c[k])){ if(stored[k][j]!=null) c[k][j]=stored[k][j]; }
+    else c[k]=stored[k]; }
+  if(stored.targets&&stored.targets.models==null) c.targets.models=80;
+  delete c.targets.modelsMin; delete c.targets.modelsMax;
+  for(const kind of ["models","influencers"]) for(const id of SYS) if(!c.statuses[kind].some(s=>s.id===id)) c.statuses[kind].push(baseStatuses().find(s=>s.id===id));
+  return c;
+}
+function initTab(){ const h=(location.hash||"").slice(1); if(TABS.some(t=>t[0]===h)) S.tab=h; }
+
+async function resolveRole(){
+  S.role="guest"; S.roles=null;
+  const u=S.authUser; if(!u||!S.db) return;
+  try{
+    const snap=await S.db.doc("roles/main").get(); let r=snap.exists?snap.data():{};
+    if(!r.ankita){ try{ const next=Object.assign({},r,{ankita:u.email}); await S.db.doc("roles/main").set(next); r=next; }catch(e){ /* only Ankita's email is allowed to claim the owner seat */ } }
+    S.roles=r;
+    if(r.ankita&&r.ankita.toLowerCase()===u.email) S.role="ankita";
+    else if(r.piyush&&r.piyush.toLowerCase()===u.email) S.role="piyush";
+  }catch(e){ console.warn("roles",e); }
+}
+async function boot(){
+  initTab(); renderTabs(); renderCountdown(); renderMe(); setInterval(renderCountdown,60000);
+  const fb=await window.__fbReady;
+  if(!fb||fb.setup||fb.error){ S.ready=true; S.bootMsg=fb&&fb.setup?"setup":"error"; S.bootErr=fb&&fb.error||""; $("#boot")?.remove(); renderMain(true); return; }
+  S.db=fb.db; S.auth=fb.auth; S.downloads={save:saveFile};
+  const db=fb.db;
+  let firstAuth=true;
+  fb.auth.onChange(async u=>{
+    S.authUser=u; await resolveRole(); renderMe();
+    if(u&&S.role==="guest"&&!firstAuth) toast(`${u.email} has view-only access. Ask Ankita to add you in Settings.`);
+    if(u&&S.role!=="guest"&&!firstAuth) toast(`Signed in as ${PEOPLE[S.role].name}`);
+    firstAuth=false;
+    if(!visibleTabs().some(t=>t[0]===S.tab)) S.tab="dashboard";
+    renderTabs(); if(S.ready) renderMain(true); renderDrawer(true);
+  });
+  const onErr=e=>{ console.warn(e); };
+  const mark=()=>{ if(!S.ready&&S.loaded.models&&S.loaded.config){ S.ready=true; $("#boot")?.remove(); renderTabs(); renderMain(true); } else scheduleRender(); };
+  db.collection("models").onSnapshot(s=>{ S.models=s.docs.map(d=>Object.assign({id:d.id},d.data())); S.loaded.models=true; mark(); },onErr);
+  db.collection("influencers").onSnapshot(s=>{ S.influencers=s.docs.map(d=>Object.assign({id:d.id},d.data())); S.loaded.influencers=true; mark(); },onErr);
+  db.doc("config/main").onSnapshot(s=>{ S.configExists=s.exists; S.config=mergeConfig(s.exists?s.data():null); S.loaded.config=true; mark(); },e=>{ onErr(e); S.loaded.config=true; mark(); });
+  db.collection("sync").onSnapshot(s=>{ S.sync={models:null,influencers:null}; s.docs.forEach(d=>{ S.sync[d.id]=d.data(); }); scheduleRender(); },onErr);
+  db.collection("activity").orderBy("at","desc").limit(400).onSnapshot(s=>{ S.activity=s.docs.map(d=>d.data()); scheduleRender(); },onErr);
+  let wasPhone=isPhone(); window.addEventListener("resize",()=>{ const p=isPhone(); if(p!==wasPhone){ wasPhone=p; renderTabs(); renderMain(true); } });
+  setTimeout(()=>{ if(!S.ready){ S.ready=true; renderMain(true); } },10000);
+}
+boot();
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+rules_version = '2';
+
+// Tasva LFW Show Desk: who may read and write what.
+// Paste this whole file into Firebase console → Firestore Database → Rules, then press Publish.
+// Before publishing, replace REPLACE_WITH_ANKITA_EMAIL below with Ankita's Google sign-in email, in lowercase.
+// (Make that edit in the Firebase console only, so the email doesn't go into the public GitHub repo.)
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function ankitaEmail() { return "REPLACE_WITH_ANKITA_EMAIL"; }
+
+    function signedIn() { return request.auth != null && request.auth.token.email_verified == true; }
+    function myEmail() { return request.auth.token.email.lower(); }
+    function isAnkita() { return signedIn() && myEmail() == ankitaEmail(); }
+    function rolesPath() { return /databases/$(database)/documents/roles/main; }
+    function isPiyush() {
+      return signedIn() && exists(rolesPath())
+        && get(rolesPath()).data.get('piyush', '') != ''
+        && myEmail() == get(rolesPath()).data.piyush.lower();
+    }
+    function isEditor() { return isAnkita() || isPiyush(); }
+
+    // Approval locks: only Ankita sends someone to "Approval pending Piyush";
+    // only Piyush moves them on from there (Ankita may only send them back to New or Dropped).
+    function statusOk(before, after) {
+      return before == after
+        || (after == 'pending_piyush' && isAnkita())
+        || (before == 'new' && after != 'pending_piyush' && isAnkita())
+        || (before == 'pending_piyush' && (isPiyush() || (isAnkita() && after in ['new', 'dropped'])))
+        || (before != 'new' && before != 'pending_piyush' && after != 'pending_piyush' && isEditor());
+    }
+    // Ankita's approval stamp can only be written by Ankita, Piyush's only by Piyush.
+    function approvalsOk() {
+      let b = resource.data.get('approvals', {});
+      let a = request.resource.data.get('approvals', {});
+      return (a.get('ankita', null) == b.get('ankita', null) || isAnkita())
+          && (a.get('piyush', null) == b.get('piyush', null) || isPiyush());
+    }
+    function canCreatePerson() {
+      return isAnkita()
+        || (isPiyush() && request.resource.data.get('status', 'new') == 'new'
+            && request.resource.data.get('approvals', {}).size() == 0);
+    }
+    function canUpdatePerson() {
+      return isEditor()
+        && statusOk(resource.data.get('status', 'new'), request.resource.data.get('status', 'new'))
+        && approvalsOk();
+    }
+
+    // Everyone with the link can read (guests need no sign-in).
+    match /models/{id} {
+      allow read: if true;
+      allow create: if canCreatePerson();
+      allow update: if canUpdatePerson();
+      allow delete: if isAnkita();
+    }
+    match /influencers/{id} {
+      allow read: if true;
+      allow create: if canCreatePerson();
+      allow update: if canUpdatePerson();
+      allow delete: if isAnkita();
+    }
+    match /activity/{id} {
+      allow read: if true;
+      allow create: if isEditor();
+      allow update, delete: if isAnkita();
+    }
+    match /config/{id} {
+      allow read: if true;
+      allow write: if isAnkita();
+    }
+    match /sync/{id} {
+      allow read: if true;
+      allow write: if isAnkita();
+    }
+    // Who is Piyush. Readable only when signed in, so emails aren't public.
+    match /roles/{id} {
+      allow read: if signedIn();
+      allow write: if isAnkita();
+    }
+  }
+}
